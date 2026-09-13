@@ -4,647 +4,1323 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LearnAI - Adaptive Student Learning</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'Segoe UI', 'Arial', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="./src/output.css">
 </head>
-<body class="bg-gradient-to-r from-purple-500 to-cyan-300 text-1xl font-bold font-sans">
 
-<section id="authPage" class="min-h-screen flex items-center justify-center p-5 bg-gradient-to-br from-[#6c63ff] via-[#9b8cff] to-[#d3cfff]">
-    <div class="w-full max-w-sm mx-auto mt-10 min-h-[560px] relative">
-        <div id="authBox" class="relative w-full min-h-[560px] bg-white rounded shadow-2xl overflow-hidden">
+<body class="bg-[#eef1f7] text-1xl font-bold font-sans">
 
-            <div id="loginSide" class="w-full min-h-[560px]">
-                <div class="hidden md:flex flex-col items-center justify-center p-10 text-white text-center bg-gradient-to-br from-red-400 to-yellow-600">
-                    <div class="text-7xl mb-6">🤖</div>
-                    <h1 class="text-4xl font-extrabold mb-4">LearnAI</h1>
-                    <p class="text-lg opacity-90 leading-relaxed">Your intelligent and adaptive learning companion.</p>
-                    <div class="mt-8 space-y-3 text-left">
-                        <p>✓ Personalized learning</p>
-                        <p>✓ Interactive quizzes</p>
-                        <p>✓ Progress tracking</p>
-                        <p>✓ Achievement certificates</p>
-                    </div>
-                </div>          
-
-<section id="app" class="hidden min-h-screen">
+<section id="app" class="min-h-screen">
 
     <aside class="fixed left-0 top-0 bottom-0 w-[245px] bg-gradient-to-r from-gray-600 to-cyan-900 text-white p-5 z-40">
+
         <div class="text-center mb-10">
             <h1 class="text-2xl font-extrabold">LearnAI</h1>
-            <p class="text-xs text-gray-400 mt-1">Adaptive Learning</p>
+            <p class="text-xs text-gray-300 mt-1">Adaptive Learning</p>
         </div>
+
         <nav class="space-y-2">
-            <button data-page="dashboard" onclick="showPage('dashboard', this)" class="nav-btn w-full text-left px-4 py-3 rounded-xl bg-[#2b2f4a] text-white transition">🏠 Dashboard</button>
-            <button data-page="topics" onclick="showPage('topics', this)" class="nav-btn w-full text-left px-4 py-3 rounded-xl text-gray-300 hover:bg-[#2b2f4a] transition">📚 Topics</button>
-            <button data-page="profile" onclick="showPage('profile', this)" class="nav-btn w-full text-left px-4 py-3 rounded-xl text-gray-300 hover:bg-gray-500 transition">👤 Profile</button>
+            <button data-page="dashboard"
+                onclick="showPage('dashboard', this)"
+                class="nav-btn w-full text-left px-4 py-3 rounded-xl bg-[#2b2f4a] text-white transition">
+                🏠 Dashboard
+            </button>
+
+            <button data-page="topics"
+                onclick="showPage('topics', this)"
+                class="nav-btn w-full text-left px-4 py-3 rounded-xl text-gray-300 hover:bg-[#2b2f4a] transition">
+                📚 Topics
+            </button>
+
+            <button data-page="profile"
+                onclick="showPage('profile', this)"
+                class="nav-btn w-full text-left px-4 py-3 rounded-xl text-gray-300 hover:bg-gray-500 transition">
+                👤 Profile
+            </button>
         </nav>
-        <button onclick="logout()" class="absolute bottom-6 left-5 right-5 px-4 py-3 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition">Logout</button>
+
+        <button onclick="logout()"
+            class="absolute bottom-6 left-5 right-5 px-4 py-3 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition">
+            Logout
+        </button>
+
     </aside>
 
     <main class="ml-[245px] p-6">
 
         <header class="bg-white rounded-2xl px-6 py-4 mb-6 shadow-sm flex items-center justify-between">
+
             <div>
                 <h2 id="pageTitle" class="text-2xl font-bold">Dashboard</h2>
                 <p class="text-sm text-gray-500">Continue your learning journey</p>
             </div>
+
             <div class="flex items-center gap-3">
                 <div id="topUserName" class="font-semibold hidden sm:block">Student</div>
-                <div id="avatar" class="w-11 h-11 rounded-full bg-gradient-to-br from-[#6c63ff] to-[#9b8cff] text-white flex items-center justify-center font-bold">S</div>
+
+                <div id="avatar"
+                    class="w-11 h-11 rounded-full bg-gradient-to-br from-[#6c63ff] to-[#9b8cff] text-white flex items-center justify-center font-bold">
+                    S
+                </div>
             </div>
+
         </header>
 
-        <section id="dashboard" class="page">
+
+        <section id="dashboard" class="block">
 
             <div class="mb-6">
-                <h1 class="text-3xl font-bold">Hello, <span id="dashboardName">Student</span> 👋</h1>
-                <p class="text-gray-500 mt-1">Here's your learning overview.</p>
+                <h1 class="text-3xl font-bold">
+                    Hello, <span id="dashboardName">Student</span> 👋
+                </h1>
+
+                <p class="text-gray-500 mt-1">
+                    Here's your learning overview.
+                </p>
             </div>
 
+
             <div class="grid md:grid-cols-3 gap-5 mb-4">
+
                 <div class="bg-white p-6 rounded-2xl shadow-sm">
                     <div class="text-4xl mb-3">🔥</div>
                     <p class="text-gray-500">Current Streak</p>
                     <h2 id="streakValue" class="text-3xl font-bold mt-1">0</h2>
                 </div>
+
                 <div class="bg-white p-6 rounded-2xl shadow-sm">
                     <div class="text-4xl mb-3">📝</div>
                     <p class="text-gray-500">Quizzes Completed</p>
                     <h2 id="quizCount" class="text-3xl font-bold mt-1">0</h2>
                 </div>
+
                 <div class="bg-white p-6 rounded-2xl shadow-sm">
                     <div class="text-4xl mb-3">📊</div>
                     <p class="text-gray-500">Average Score</p>
                     <h2 id="averageScore" class="text-3xl font-bold mt-1">0%</h2>
                 </div>
+
             </div>
 
+
             <div class="grid md:grid-cols-3 gap-5 mb-6">
+
                 <div class="bg-white p-6 rounded-2xl shadow-sm">
+
                     <div class="flex justify-between mb-3">
                         <h3 class="font-bold">Easy</h3>
                         <span id="easyProgressText">0%</span>
                     </div>
+
                     <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
-                        <div id="easyProgress" class="h-full bg-gradient-to-r from-[#6c63ff] to-[#9b8cff]" style="width:0%"></div>
+                        <div id="easyProgress"
+                            class="h-full bg-gradient-to-r from-[#6c63ff] to-[#9b8cff]"
+                            style="width:0%">
+                        </div>
                     </div>
+
                 </div>
+
+
                 <div class="bg-white p-6 rounded-2xl shadow-sm">
+
                     <div class="flex justify-between mb-3">
                         <h3 class="font-bold">Medium</h3>
                         <span id="mediumProgressText">0%</span>
                     </div>
+
                     <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
-                        <div id="mediumProgress" class="h-full bg-gradient-to-r from-yellow-500 to-red-300" style="width:0%"></div>
+                        <div id="mediumProgress"
+                            class="h-full bg-gradient-to-r from-yellow-500 to-red-300"
+                            style="width:0%">
+                        </div>
                     </div>
+
                 </div>
+
+
                 <div class="bg-white p-6 rounded-2xl shadow-sm">
+
                     <div class="flex justify-between mb-3">
                         <h3 class="font-bold">Hard</h3>
                         <span id="hardProgressText">0%</span>
                     </div>
+
                     <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
-                        <div id="hardProgress" class="h-full bg-gradient-to-r from-yellow-800 to-red-300" style="width:0%"></div>
+                        <div id="hardProgress"
+                            class="h-full bg-gradient-to-r from-yellow-800 to-red-300"
+                            style="width:0%">
+                        </div>
                     </div>
+
                 </div>
+
             </div>
 
+
             <div class="bg-gradient-to-r from-red-600 to-yellow-200 text-white p-7 rounded-2xl mb-6">
-                <h2 class="text-2xl font-bold mb-2">💡 Recommended For You</h2>
-                <p id="recommendation" class="opacity-90 mb-5">Start with an Easy quiz to build your confidence.</p>
-                <button onclick="showPage('topics')" class="bg-white text-gray-700 px-5 py-3 rounded-xl font-bold hover:shadow-lg transition">Start Learning →</button>
+
+                <h2 class="text-2xl font-bold mb-2">
+                    💡 Recommended For You
+                </h2>
+
+                <p id="recommendation" class="opacity-90 mb-5">
+                    Start with an Easy quiz to build your confidence.
+                </p>
+
+                <button onclick="showPage('topics')"
+                    class="bg-white text-gray-700 px-5 py-3 rounded-xl font-bold hover:shadow-lg transition">
+                    Start Learning →
+                </button>
+
             </div>
 
         </section>
 
-        <section id="topics" class="page hidden">
+
+        <section id="topics" class="hidden">
 
             <div class="mb-6">
                 <h1 class="text-3xl font-bold">Choose Your Quiz</h1>
                 <p class="text-gray-500">Select a difficulty level.</p>
             </div>
 
+
             <div class="grid md:grid-cols-3 gap-5">
+
                 <div class="bg-white p-7 rounded-2xl shadow-sm hover:-translate-y-1 hover:shadow-xl transition">
+
                     <div class="text-5xl mb-5">🌱</div>
+
                     <h2 class="text-2xl font-bold mb-2">Easy</h2>
-                    <p class="text-gray-500 mb-6">Beginner-friendly questions.</p>
-                    <button onclick="startQuiz('easy')" class="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-blue-300 text-white font-bold">Start Easy Quiz</button>
+
+                    <p class="text-gray-500 mb-6">
+                        Beginner-friendly questions.
+                    </p>
+
+                    <button onclick="startQuiz('easy')"
+                        class="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-blue-300 text-white font-bold">
+                        Start Easy Quiz
+                    </button>
+
                 </div>
+
+
                 <div class="bg-white p-7 rounded-2xl shadow-sm hover:-translate-y-1 hover:shadow-xl transition">
+
                     <div class="text-5xl mb-5">🚀</div>
+
                     <h2 class="text-2xl font-bold mb-2">Medium</h2>
-                    <p class="text-gray-500 mb-6">Test your understanding.</p>
-                    <button onclick="startQuiz('medium')" class="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-blue-300 text-white font-bold">Start Medium Quiz</button>
+
+                    <p class="text-gray-500 mb-6">
+                        Test your understanding.
+                    </p>
+
+                    <button onclick="startQuiz('medium')"
+                        class="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-blue-300 text-white font-bold">
+                        Start Medium Quiz
+                    </button>
+
                 </div>
+
+
                 <div class="bg-white p-7 rounded-2xl shadow-sm hover:-translate-y-1 hover:shadow-xl transition">
+
                     <div class="text-5xl mb-5">🔥</div>
+
                     <h2 class="text-2xl font-bold mb-2">Hard</h2>
-                    <p class="text-gray-500 mb-6">Challenge your knowledge.</p>
-                    <button onclick="startQuiz('hard')" class="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-blue-300 text-white font-bold">Start Hard Quiz</button>
+
+                    <p class="text-gray-500 mb-6">
+                        Challenge your knowledge.
+                    </p>
+
+                    <button onclick="startQuiz('hard')"
+                        class="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-blue-300 text-white font-bold">
+                        Start Hard Quiz
+                    </button>
+
                 </div>
+
             </div>
 
             <div id="quizArea" class="mt-8"></div>
 
         </section>
 
-        <section id="profile" class="page hidden">
+
+        <section id="profile" class="hidden">
+
             <div class="max-w-3xl mx-auto">
+
                 <div class="bg-white p-7 rounded-2xl shadow-sm">
 
                     <div class="text-center mb-8">
-                        <div id="profileAvatar" class="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-[#6c63ff] to-[#9b8cff] text-white flex items-center justify-center text-3xl font-bold">S</div>
-                        <h2 id="profileDisplayName" class="text-2xl font-bold mt-4">Student</h2>
-                        <p class="text-gray-500">LearnAI Student</p>
+
+                        <div id="profileAvatar"
+                            class="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-[#6c63ff] to-[#9b8cff] text-white flex items-center justify-center text-3xl font-bold">
+                            S
+                        </div>
+
+                        <h2 id="profileDisplayName"
+                            class="text-2xl font-bold mt-4">
+                            Student
+                        </h2>
+
+                        <p class="text-gray-500">
+                            LearnAI Student
+                        </p>
+
                     </div>
 
+
                     <div class="grid md:grid-cols-2 gap-4">
+
                         <div>
                             <label class="text-sm text-gray-500">Name</label>
-                            <input id="profileName" class="w-full p-3 mt-1 border rounded-xl">
+                            <input id="profileName"
+                                class="w-full p-3 mt-1 border rounded-xl">
                         </div>
+
+
                         <div>
                             <label class="text-sm text-gray-500">Email</label>
-                            <input id="profileEmail" disabled class="w-full p-3 mt-1 border rounded-xl bg-gray-100">
+                            <input id="profileEmail"
+                                disabled
+                                class="w-full p-3 mt-1 border rounded-xl bg-gray-100">
                         </div>
+
+
                         <div>
                             <label class="text-sm text-gray-500">College</label>
-                            <input id="profileCollege" class="w-full p-3 mt-1 border rounded-xl">
+                            <input id="profileCollege"
+                                class="w-full p-3 mt-1 border rounded-xl">
                         </div>
+
+
                         <div>
                             <label class="text-sm text-gray-500">Course</label>
-                            <input id="profileCourse" class="w-full p-3 mt-1 border rounded-xl">
+                            <input id="profileCourse"
+                                class="w-full p-3 mt-1 border rounded-xl">
                         </div>
+
+
                         <div>
                             <label class="text-sm text-gray-500">Year</label>
-                            <input id="profileYear" class="w-full p-3 mt-1 border rounded-xl">
+                            <input id="profileYear"
+                                class="w-full p-3 mt-1 border rounded-xl">
                         </div>
+
+
                         <div>
                             <label class="text-sm text-gray-500">Language</label>
-                            <select id="profileLanguage" class="w-full p-3 mt-1 border rounded-xl">
+
+                            <select id="profileLanguage"
+                                class="w-full p-3 mt-1 border rounded-xl">
+
                                 <option>English</option>
                                 <option>Hindi</option>
                                 <option>Marathi</option>
+
                             </select>
+
                         </div>
+
                     </div>
 
-                    <button onclick="saveProfile()" class="w-full mt-6 py-3.5 rounded-xl bg-gradient-to-r from-[#6c63ff] to-[#8e7dff] text-white font-bold">Save Profile</button>
+
+                    <button onclick="saveProfile()"
+                        class="w-full mt-6 py-3.5 rounded-xl bg-gradient-to-r from-[#6c63ff] to-[#8e7dff] text-white font-bold">
+                        Save Profile
+                    </button>
 
                 </div>
+
             </div>
+
         </section>
 
     </main>
+
 </section>
 
-<div id="toast" class="hidden fixed right-6 bottom-6 z-[100] px-5 py-3.5 rounded-xl bg-[#171a2c] text-white shadow-xl"></div>
+
+<div id="toast"
+    class="hidden fixed right-6 bottom-6 z-[100] px-5 py-3.5 rounded-xl bg-[#171a2c] text-white shadow-xl">
+</div>
+
 
 <script>
+
 const quizData = {
+
     easy: [
-        ["What does CPU stand for?", ["Central Processing Unit","Computer Personal Unit","Central Program Utility","Control Processing User"], 0],
-        ["Which language is used to structure web pages?", ["HTML","CSS","Python","SQL"], 0],
-        ["Which device is used to input text?", ["Keyboard","Monitor","Speaker","Printer"], 0],
-        ["What does RAM stand for?", ["Random Access Memory","Read Access Memory","Rapid Action Memory","Run Access Module"], 0],
-        ["Which one is an operating system?", ["Windows","Google","HTML","Intel"], 0],
-        ["Which symbol is used for comments in C++?", ["//","#","<!--","**"], 0],
-        ["Which data type stores whole numbers in C++?", ["int","float","char","string"], 0],
-        ["Which keyword is used to create a class in C++?", ["class","object","structs","define"], 0],
-        ["Which company developed Android?", ["Google","Microsoft","Apple","IBM"], 0],
-        ["What is 5 + 5?", ["10","15","20","25"], 0],
-        ["Which is a programming language?", ["Python","Chrome","Windows","Google"], 0],
-        ["What does URL stand for?", ["Uniform Resource Locator","Universal Read Link","User Resource Language","Uniform Router Link"], 0],
-        ["Which device displays output?", ["Monitor","Keyboard","Mouse","Scanner"], 0],
-        ["What does AI stand for?", ["Artificial Intelligence","Automated Internet","Advanced Input","Artificial Internet"], 0],
-        ["Which one is a database?", ["MySQL","HTML","CSS","Chrome"], 0],
-        ["Which loop repeats while a condition is true?", ["while","if","switch","class"], 0],
-        ["Which operator means AND in C++?", ["&&","||","!","=="], 0],
-        ["Which operator means OR in C++?", ["||","&&","!","!="], 0],
-        ["Which keyword returns a value from a function?", ["return","send","output","give"], 0],
-        ["Which file extension is commonly used for C++?", [".cpp",".html",".css",".py"], 0]
+
+        ["What does CPU stand for?",
+            ["Central Processing Unit","Computer Personal Unit","Central Program Utility","Control Processing User"],0],
+
+        ["Which language is used to structure web pages?",
+            ["HTML","CSS","Python","SQL"],0],
+
+        ["Which device is used to input text?",
+            ["Keyboard","Monitor","Speaker","Printer"],0],
+
+        ["What does RAM stand for?",
+            ["Random Access Memory","Read Access Memory","Rapid Action Memory","Run Access Module"],0],
+
+        ["Which one is an operating system?",
+            ["Windows","Google","HTML","Intel"],0],
+
+        ["Which symbol is used for comments in C++?",
+            ["//","#","<!--","**"],0],
+
+        ["Which data type stores whole numbers in C++?",
+            ["int","float","char","string"],0],
+
+        ["Which keyword is used to create a class in C++?",
+            ["class","object","structs","define"],0],
+
+        ["Which company developed Android?",
+            ["Google","Microsoft","Apple","IBM"],0],
+
+        ["What is 5 + 5?",
+            ["10","15","20","25"],0],
+
+        ["Which is a programming language?",
+            ["Python","Chrome","Windows","Google"],0],
+
+        ["What does URL stand for?",
+            ["Uniform Resource Locator","Universal Read Link","User Resource Language","Uniform Router Link"],0],
+
+        ["Which device displays output?",
+            ["Monitor","Keyboard","Mouse","Scanner"],0],
+
+        ["What does AI stand for?",
+            ["Artificial Intelligence","Automated Internet","Advanced Input","Artificial Internet"],0],
+
+        ["Which one is a database?",
+            ["MySQL","HTML","CSS","Chrome"],0],
+
+        ["Which loop repeats while a condition is true?",
+            ["while","if","switch","class"],0],
+
+        ["Which operator means AND in C++?",
+            ["&&","||","!","=="],0],
+
+        ["Which operator means OR in C++?",
+            ["||","&&","!","!="],0],
+
+        ["Which keyword returns a value from a function?",
+            ["return","send","output","give"],0],
+
+        ["Which file extension is commonly used for C++?",
+            [".cpp",".html",".css",".py"],0]
+
     ],
+
+
     medium: [
-        ["What is the time complexity of binary search?", ["O(log n)","O(n)","O(n²)","O(1)"], 0],
-        ["Which data structure follows LIFO?", ["Stack","Queue","Array","Graph"], 0],
-        ["Which data structure follows FIFO?", ["Queue","Stack","Tree","Heap"], 0],
-        ["Which algorithm is commonly used for sorting?", ["Merge Sort","Binary Search","DFS","BFS"], 0],
-        ["What is inheritance in OOP?", ["Acquiring properties of another class","Deleting a class","Creating variables","Sorting objects"], 0],
-        ["Which keyword prevents inheritance in some languages?", ["final","stop","private","static"], 0],
-        ["What is polymorphism?", ["One interface, multiple forms","Only one object","Memory allocation","Data deletion"], 0],
-        ["Which structure stores key-value pairs?", ["Map","Stack","Queue","Array"], 0],
-        ["Which traversal uses a queue?", ["BFS","DFS","Binary Search","Merge Sort"], 0],
-        ["Which traversal commonly uses a stack?", ["DFS","BFS","Binary Search","Bubble Sort"], 0],
-        ["What is the worst-case complexity of bubble sort?", ["O(n²)","O(log n)","O(n)","O(1)"], 0],
-        ["Which sorting algorithm uses divide and conquer?", ["Merge Sort","Bubble Sort","Linear Search","Selection"], 0],
-        ["What is recursion?", ["A function calling itself","A loop only","A variable","A class"], 0],
-        ["Which memory is volatile?", ["RAM","ROM","SSD","Hard Disk"], 0],
-        ["Which protocol is used for secure web browsing?", ["HTTPS","HTTP","FTP","SMTP"], 0],
-        ["What does API stand for?", ["Application Programming Interface","Application Program Internet","Advanced Programming Input","Automated Program Interface"], 0],
-        ["What does SQL primarily work with?", ["Databases","Images","Audio","Networks"], 0],
-        ["Which command retrieves data in SQL?", ["SELECT","GET","READ","FETCH"], 0],
-        ["Which keyword creates an object dynamically in C++?", ["new","create","object","malloc"], 0],
-        ["What is encapsulation?", ["Bundling data and methods","Sorting data","Deleting data","Copying files"], 0]
+
+        ["What is the time complexity of binary search?",
+            ["O(log n)","O(n)","O(n²)","O(1)"],0],
+
+        ["Which data structure follows LIFO?",
+            ["Stack","Queue","Array","Graph"],0],
+
+        ["Which data structure follows FIFO?",
+            ["Queue","Stack","Tree","Heap"],0],
+
+        ["Which algorithm is commonly used for sorting?",
+            ["Merge Sort","Binary Search","DFS","BFS"],0],
+
+        ["What is inheritance in OOP?",
+            ["Acquiring properties of another class","Deleting a class","Creating variables","Sorting objects"],0],
+
+        ["Which keyword prevents inheritance in some languages?",
+            ["final","stop","private","static"],0],
+
+        ["What is polymorphism?",
+            ["One interface, multiple forms","Only one object","Memory allocation","Data deletion"],0],
+
+        ["Which structure stores key-value pairs?",
+            ["Map","Stack","Queue","Array"],0],
+
+        ["Which traversal uses a queue?",
+            ["BFS","DFS","Binary Search","Merge Sort"],0],
+
+        ["Which traversal commonly uses a stack?",
+            ["DFS","BFS","Binary Search","Bubble Sort"],0],
+
+        ["What is the worst-case complexity of bubble sort?",
+            ["O(n²)","O(log n)","O(n)","O(1)"],0],
+
+        ["Which sorting algorithm uses divide and conquer?",
+            ["Merge Sort","Bubble Sort","Linear Search","Selection"],0],
+
+        ["What is recursion?",
+            ["A function calling itself","A loop only","A variable","A class"],0],
+
+        ["Which memory is volatile?",
+            ["RAM","ROM","SSD","Hard Disk"],0],
+
+        ["Which protocol is used for secure web browsing?",
+            ["HTTPS","HTTP","FTP","SMTP"],0],
+
+        ["What does API stand for?",
+            ["Application Programming Interface","Application Program Internet","Advanced Programming Input","Automated Program Interface"],0],
+
+        ["What does SQL primarily work with?",
+            ["Databases","Images","Audio","Networks"],0],
+
+        ["Which command retrieves data in SQL?",
+            ["SELECT","GET","READ","FETCH"],0],
+
+        ["Which keyword creates an object dynamically in C++?",
+            ["new","create","object","malloc"],0],
+
+        ["What is encapsulation?",
+            ["Bundling data and methods","Sorting data","Deleting data","Copying files"],0]
+
     ],
+
+
     hard: [
-        ["What is the average complexity of hash table lookup?", ["O(1)","O(n)","O(log n)","O(n²)"], 0],
-        ["Which algorithm finds shortest paths with non-negative weights?", ["Dijkstra","DFS","Bubble Sort","Kruskal"], 0],
-        ["Which algorithm is used for minimum spanning tree?", ["Kruskal","Binary Search","DFS","Merge Sort"], 0],
-        ["What is the complexity of merge sort?", ["O(n log n)","O(n²)","O(log n)","O(n)"], 0],
-        ["Which data structure is commonly used in Dijkstra's optimized implementation?", ["Priority Queue","Stack","Queue","Array"], 0],
-        ["What is dynamic programming?", ["Solving overlapping subproblems using stored results","Only recursion","Sorting arrays","Network routing"], 0],
-        ["What does memoization mean?", ["Caching computed results","Deleting memory","Sorting data","Creating objects"], 0],
-        ["Which algorithm is used to find strongly connected components?", ["Kosaraju","Binary Search","Bubble Sort","Dijkstra"], 0],
-        ["Which data structure supports efficient minimum extraction?", ["Min Heap","Stack","Queue","Linked List"], 0],
-        ["What is the complexity of accessing an array element by index?", ["O(1)","O(n)","O(log n)","O(n²)"], 0],
-        ["Which traversal of a BST gives sorted order?", ["Inorder","Preorder","Postorder","Level order"], 0],
-        ["What is the height of a balanced binary tree approximately?", ["O(log n)","O(n)","O(n²)","O(1)"], 0],
-        ["Which technique is used by quicksort?", ["Partitioning","Hashing","BFS","Memoization"], 0],
-        ["Average complexity of quicksort?", ["O(n log n)","O(n²)","O(log n)","O(n)"], 0],
-        ["What is a deadlock?", ["Processes waiting indefinitely for resources","Program compilation","Memory sorting","Network transfer"], 0],
-        ["Which condition is necessary for deadlock?", ["Circular wait","Sorting","Recursion","Inheritance"], 0],
-        ["What is virtual memory?", ["Using disk space as an extension of memory","CPU cache","ROM","Register"], 0],
-        ["What is normalization mainly used for in databases?", ["Reducing redundancy","Increasing duplication","Encrypting data","Sorting rows"], 0],
-        ["What is indexing in databases used for?", ["Faster data retrieval","Deleting tables","Encrypting passwords","Creating users"], 0],
-        ["What is machine learning?", ["Learning patterns from data","Writing HTML","Managing files","Drawing graphics"], 0]
+
+        ["What is the average complexity of hash table lookup?",
+            ["O(1)","O(n)","O(log n)","O(n²)"],0],
+
+        ["Which algorithm finds shortest paths with non-negative weights?",
+            ["Dijkstra","DFS","Bubble Sort","Kruskal"],0],
+
+        ["Which algorithm is used for minimum spanning tree?",
+            ["Kruskal","Binary Search","DFS","Merge Sort"],0],
+
+        ["What is the complexity of merge sort?",
+            ["O(n log n)","O(n²)","O(log n)","O(n)"],0],
+
+        ["Which data structure is commonly used in Dijkstra's optimized implementation?",
+            ["Priority Queue","Stack","Queue","Array"],0],
+
+        ["What is dynamic programming?",
+            ["Solving overlapping subproblems using stored results","Only recursion","Sorting arrays","Network routing"],0],
+
+        ["What does memoization mean?",
+            ["Caching computed results","Deleting memory","Sorting data","Creating objects"],0],
+
+        ["Which algorithm is used to find strongly connected components?",
+            ["Kosaraju","Binary Search","Bubble Sort","Dijkstra"],0],
+
+        ["Which data structure supports efficient minimum extraction?",
+            ["Min Heap","Stack","Queue","Linked List"],0],
+
+        ["What is the complexity of accessing an array element by index?",
+            ["O(1)","O(n)","O(log n)","O(n²)"],0],
+
+        ["Which traversal of a BST gives sorted order?",
+            ["Inorder","Preorder","Postorder","Level order"],0],
+
+        ["What is the height of a balanced binary tree approximately?",
+            ["O(log n)","O(n)","O(n²)","O(1)"],0],
+
+        ["Which technique is used by quicksort?",
+            ["Partitioning","Hashing","BFS","Memoization"],0],
+
+        ["Average complexity of quicksort?",
+            ["O(n log n)","O(n²)","O(log n)","O(n)"],0],
+
+        ["What is a deadlock?",
+            ["Processes waiting indefinitely for resources","Program compilation","Memory sorting","Network transfer"],0],
+
+        ["Which condition is necessary for deadlock?",
+            ["Circular wait","Sorting","Recursion","Inheritance"],0],
+
+        ["What is virtual memory?",
+            ["Using disk space as an extension of memory","CPU cache","ROM","Register"],0],
+
+        ["What is normalization mainly used for in databases?",
+            ["Reducing redundancy","Increasing duplication","Encrypting data","Sorting rows"],0],
+
+        ["What is indexing in databases used for?",
+            ["Faster data retrieval","Deleting tables","Encrypting passwords","Creating users"],0],
+
+        ["What is machine learning?",
+            ["Learning patterns from data","Writing HTML","Managing files","Drawing graphics"],0]
+
     ]
+
 };
 
-let currentUser = JSON.parse(localStorage.getItem("learnAIUser")) || null;
+
+let currentUser = JSON.parse(localStorage.getItem("learnAIUser")) || {
+    name: "Student",
+    email: "student@example.com",
+    college: "",
+    course: "",
+    year: "",
+    language: "English"
+};
+
+
+let state = JSON.parse(localStorage.getItem("learnAIState")) || {
+    streak: 0,
+    lastStudy: null,
+    quizzes: []
+};
+
+
 let currentQuiz = [];
 let currentDifficulty = "";
 let currentQuestion = 0;
 let currentAnswers = [];
 
+
 function saveState() {
     localStorage.setItem("learnAIState", JSON.stringify(state));
 }
 
+
 function escapeHTML(text) {
+
     return String(text)
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+
 }
+
 
 function showToast(message) {
+
     const toast = document.getElementById("toast");
+
     toast.textContent = message;
+
     toast.classList.remove("hidden");
-    setTimeout(() => toast.classList.add("hidden"), 2500);
+
+    setTimeout(() => {
+        toast.classList.add("hidden");
+    }, 2500);
+
 }
 
-function showRegister() {
-    document.getElementById("loginSide").classList.add("hidden");
-    document.getElementById("registerSide").classList.remove("hidden");
-}
-
-function showLogin() {
-    document.getElementById("registerSide").classList.add("hidden");
-    document.getElementById("loginSide").classList.remove("hidden");
-}
-
-function signup() {
-    const name = document.getElementById("signupName").value.trim();
-    const email = document.getElementById("signupEmail").value.trim();
-    const password = document.getElementById("signupPassword").value;
-    const college = document.getElementById("signupCollege").value.trim();
-    const course = document.getElementById("signupCourse").value.trim();
-    const year = document.getElementById("signupYear").value.trim();
-    const language = document.getElementById("signupLanguage").value;
-
-    if (!name || !email || !password) {
-        showToast("Please fill all required fields.");
-        return;
-    }
-
-    currentUser = { name, email, password, college, course, year, language };
-    localStorage.setItem("learnAIUser", JSON.stringify(currentUser));
-    openApp();
-    showToast("Account created successfully 🎉");
-}
-
-function login() {
-    const email = document.getElementById("loginEmail").value.trim();
-    const password = document.getElementById("loginPassword").value;
-    const savedUser = JSON.parse(localStorage.getItem("learnAIUser"));
-
-    if (!savedUser) {
-        showToast("No account found. Please register first.");
-        return;
-    }
-
-    if (email !== savedUser.email || password !== savedUser.password) {
-        showToast("Invalid email or password.");
-        return;
-    }
-
-    currentUser = savedUser;
-    openApp();
-    showToast("Welcome back 👋");
-}
-
-function openApp() {
-    document.getElementById("authPage").classList.add("hidden");
-    document.getElementById("app").classList.remove("hidden");
-    loadProfile();
-    updateDashboard();
-    updateStreak();
-}
 
 function logout() {
-    currentUser = null;
-    document.getElementById("app").classList.add("hidden");
-    document.getElementById("authPage").classList.remove("hidden");
-    showLogin();
+
+    localStorage.removeItem("learnAIUser");
+
+    currentUser = {
+        name: "Student",
+        email: "student@example.com",
+        college: "",
+        course: "",
+        year: "",
+        language: "English"
+    };
+
+    loadProfile();
+    updateDashboard();
+
     showToast("Logged out successfully.");
+
 }
 
+
 function showPage(id, button = null) {
+
     const pages = ["dashboard", "topics", "profile"];
 
     pages.forEach(page => {
+
         const element = document.getElementById(page);
-        if (element) element.classList.add("hidden");
+
+        if (element) {
+            element.classList.add("hidden");
+        }
+
     });
+
 
     const target = document.getElementById(id);
-    if (target) target.classList.remove("hidden");
 
-    document.querySelectorAll(".nav-btn").forEach(btn => {
-        btn.classList.remove("bg-[#2b2f4a]", "text-white");
-        btn.classList.add("text-gray-300");
-    });
-
-    const activeButton = button || document.querySelector(`[data-page="${id}"]`);
-    if (activeButton) {
-        activeButton.classList.remove("text-gray-300");
-        activeButton.classList.add("bg-[#2b2f4a]", "text-white");
+    if (target) {
+        target.classList.remove("hidden");
     }
 
-    const titles = { dashboard: "Dashboard", topics: "Topics", profile: "Profile" };
-    document.getElementById("pageTitle").textContent = titles[id] || "LearnAI";
 
-    if (id === "dashboard") updateDashboard();
+    document.querySelectorAll(".nav-btn").forEach(btn => {
+
+        btn.classList.remove("bg-[#2b2f4a]", "text-white");
+        btn.classList.add("text-gray-300");
+
+    });
+
+
+    const activeButton =
+        button ||
+        document.querySelector(`[data-page="${id}"]`);
+
+
+    if (activeButton) {
+
+        activeButton.classList.remove("text-gray-300");
+
+        activeButton.classList.add(
+            "bg-[#2b2f4a]",
+            "text-white"
+        );
+
+    }
+
+
+    const titles = {
+        dashboard: "Dashboard",
+        topics: "Topics",
+        profile: "Profile"
+    };
+
+
+    document.getElementById("pageTitle").textContent =
+        titles[id] || "LearnAI";
+
+
+    if (id === "dashboard") {
+        updateDashboard();
+    }
+
 }
 
-function updateStreak() {
-    if (!currentUser) return;
 
-    const today = new Date().toISOString().split("T")[0];
+function updateStreak() {
+
+    const today =
+        new Date().toISOString().split("T")[0];
+
 
     if (!state.lastStudy) {
+
         state.streak = 1;
         state.lastStudy = today;
+
         saveState();
+
         return;
     }
 
-    if (state.lastStudy === today) return;
 
-    const previous = new Date(state.lastStudy);
-    const current = new Date(today);
-    const difference = Math.floor((current - previous) / (1000 * 60 * 60 * 24));
-
-    if (difference === 1) {
-        state.streak++;
-    } else if (difference > 1) {
-        state.streak = 1;
+    if (state.lastStudy === today) {
+        return;
     }
 
+
+    const previous =
+        new Date(state.lastStudy);
+
+    const current =
+        new Date(today);
+
+
+    const difference =
+        Math.floor(
+            (current - previous) /
+            (1000 * 60 * 60 * 24)
+        );
+
+
+    if (difference === 1) {
+
+        state.streak++;
+
+    } else if (difference > 1) {
+
+        state.streak = 1;
+
+    }
+
+
     state.lastStudy = today;
+
     saveState();
+
 }
+
 
 function startQuiz(level) {
+
     currentDifficulty = level;
+
     currentQuiz = [...quizData[level]];
+
     currentQuestion = 0;
-    currentAnswers = new Array(currentQuiz.length).fill(null);
-    document.getElementById("quizArea").scrollIntoView({ behavior: "smooth" });
+
+    currentAnswers =
+        new Array(currentQuiz.length).fill(null);
+
+
+    document.getElementById("quizArea")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+
     renderQuestion();
+
 }
 
+
 function renderQuestion() {
-    const quizArea = document.getElementById("quizArea");
-    const q = currentQuiz[currentQuestion];
-    if (!q) return;
+
+    const quizArea =
+        document.getElementById("quizArea");
+
+
+    const q =
+        currentQuiz[currentQuestion];
+
+
+    if (!q) {
+        return;
+    }
+
 
     const question = q[0];
     const options = q[1];
-    const selected = currentAnswers[currentQuestion];
+
+    const selected =
+        currentAnswers[currentQuestion];
+
 
     let html = `
+
         <div class="max-w-3xl mx-auto bg-white p-7 rounded-2xl shadow-sm">
-            <div class="text-[#6c63ff] font-bold mb-3">Question ${currentQuestion + 1} / ${currentQuiz.length}</div>
-            <h2 class="text-xl md:text-2xl font-bold leading-relaxed mb-6">${escapeHTML(question)}</h2>
+
+            <div class="text-[#6c63ff] font-bold mb-3">
+                Question ${currentQuestion + 1} / ${currentQuiz.length}
+            </div>
+
+            <h2 class="text-xl md:text-2xl font-bold leading-relaxed mb-6">
+                ${escapeHTML(question)}
+            </h2>
+
             <div class="space-y-3">
     `;
 
+
     options.forEach((option, index) => {
-        const isSelected = selected === index;
+
+        const isSelected =
+            selected === index;
+
+
         html += `
-            <button onclick="selectAnswer(${index})" class="w-full text-left p-4 rounded-xl border-2 transition ${isSelected ? "border-[#6c63ff] bg-[#f0eeff]" : "border-transparent bg-[#f5f6fa] hover:border-[#8e7dff] hover:bg-[#f0eeff]"}">
-                <span class="font-medium">${String.fromCharCode(65 + index)}.</span>
+
+            <button
+                onclick="selectAnswer(${index})"
+                class="w-full text-left p-4 rounded-xl border-2 transition
+                ${
+                    isSelected
+                    ? "border-[#6c63ff] bg-[#f0eeff]"
+                    : "border-transparent bg-[#f5f6fa] hover:border-[#8e7dff] hover:bg-[#f0eeff]"
+                }">
+
+                <span class="font-medium">
+                    ${String.fromCharCode(65 + index)}.
+                </span>
+
                 ${escapeHTML(option)}
+
             </button>
+
         `;
+
     });
+
 
     html += `
+
             </div>
+
             <div class="flex justify-between mt-7 gap-3">
-                <button onclick="previousQuestion()" ${currentQuestion === 0 ? "disabled" : ""} class="px-5 py-3 rounded-xl font-bold bg-gray-200 disabled:opacity-40 disabled:cursor-not-allowed">← Previous</button>
-                ${currentQuestion === currentQuiz.length - 1
-                    ? `<button onclick="finishQuiz()" class="px-5 py-3 rounded-xl text-white font-bold bg-gradient-to-r from-[#6c63ff] to-[#8e7dff]">Finish Quiz ✓</button>`
-                    : `<button onclick="nextQuestion()" class="px-5 py-3 rounded-xl text-white font-bold bg-gradient-to-r from-[#6c63ff] to-[#8e7dff]">Next →</button>`
+
+                <button
+                    onclick="previousQuestion()"
+                    ${currentQuestion === 0 ? "disabled" : ""}
+                    class="px-5 py-3 rounded-xl font-bold bg-gray-200 disabled:opacity-40 disabled:cursor-not-allowed">
+                    ← Previous
+                </button>
+
+                ${
+                    currentQuestion === currentQuiz.length - 1
+
+                    ?
+
+                    `<button
+                        onclick="finishQuiz()"
+                        class="px-5 py-3 rounded-xl text-white font-bold bg-gradient-to-r from-[#6c63ff] to-[#8e7dff]">
+                        Finish Quiz ✓
+                    </button>`
+
+                    :
+
+                    `<button
+                        onclick="nextQuestion()"
+                        class="px-5 py-3 rounded-xl text-white font-bold bg-gradient-to-r from-[#6c63ff] to-[#8e7dff]">
+                        Next →
+                    </button>`
                 }
+
             </div>
+
         </div>
+
     `;
+
 
     quizArea.innerHTML = html;
+
 }
+
 
 function selectAnswer(index) {
-    currentAnswers[currentQuestion] = index;
+
+    currentAnswers[currentQuestion] =
+        index;
+
     renderQuestion();
+
 }
+
 
 function previousQuestion() {
+
     if (currentQuestion > 0) {
+
         currentQuestion--;
+
         renderQuestion();
+
     }
+
 }
+
 
 function nextQuestion() {
+
     if (currentAnswers[currentQuestion] === null) {
+
         showToast("Please select an answer.");
+
         return;
+
     }
+
 
     if (currentQuestion < currentQuiz.length - 1) {
+
         currentQuestion++;
+
         renderQuestion();
+
     }
+
 }
 
+
 function finishQuiz() {
+
     if (currentAnswers[currentQuestion] === null) {
+
         showToast("Please select an answer.");
+
+        return;
+
+    }
+
+
+    let score = 0;
+
+
+    currentQuiz.forEach((question, index) => {
+
+        if (
+            currentAnswers[index] === question[2]
+        ) {
+            score++;
+        }
+
+    });
+
+
+    const percentage =
+        Math.round(
+            (score / currentQuiz.length) * 100
+        );
+
+
+    state.quizzes.push({
+
+        difficulty: currentDifficulty,
+
+        score: score,
+
+        total: currentQuiz.length,
+
+        percentage: percentage,
+
+        date: new Date().toISOString()
+
+    });
+
+
+    updateStreak();
+
+    saveState();
+
+    updateDashboard();
+
+    showQuizResult(
+        score,
+        percentage
+    );
+
+}
+
+
+function showQuizResult(score, percentage) {
+
+    const quizArea =
+        document.getElementById("quizArea");
+
+
+    let message;
+
+
+    if (percentage >= 90) {
+
+        message =
+            "Excellent! You have mastered this level. 🏆";
+
+    } else if (percentage >= 70) {
+
+        message =
+            "Great job! You have successfully passed. 🎉";
+
+    } else if (percentage >= 50) {
+
+        message =
+            "Good effort! Keep practicing to improve.";
+
+    } else {
+
+        message =
+            "Don't give up. Practice and try again!";
+
+    }
+
+
+    quizArea.innerHTML = `
+
+        <div class="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-sm text-center">
+
+            <div class="text-6xl mb-4">
+                ${percentage >= 70 ? "🎉" : "📚"}
+            </div>
+
+            <h2 class="text-3xl font-bold mb-5">
+                Quiz Completed!
+            </h2>
+
+            <div class="w-36 h-36 mx-auto mb-6 rounded-full bg-gradient-to-br from-[#6c63ff] to-[#9b8cff] text-white flex flex-col items-center justify-center">
+
+                <strong class="text-4xl">
+                    ${percentage}%
+                </strong>
+
+                <span>
+                    ${score}/${currentQuiz.length}
+                </span>
+
+            </div>
+
+            <h3 class="text-xl font-bold mb-2">
+                ${message}
+            </h3>
+
+            <p class="text-gray-500 mb-5">
+                Difficulty:
+                <strong>
+                    ${currentDifficulty.toUpperCase()}
+                </strong>
+            </p>
+
+            <div class="flex gap-3 justify-center flex-wrap">
+
+                <button
+                    onclick="startQuiz('${currentDifficulty}')"
+                    class="px-5 py-3 rounded-xl text-white font-bold bg-gradient-to-r from-[#6c63ff] to-[#8e7dff]">
+                    Try Again
+                </button>
+
+                <button
+                    onclick="showPage('topics')"
+                    class="px-5 py-3 rounded-xl bg-gray-200 font-bold">
+                    Other Quizzes
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+function updateDashboard() {
+
+    if (!currentUser) {
         return;
     }
 
-    let score = 0;
-    currentQuiz.forEach((question, index) => {
-        if (currentAnswers[index] === question[2]) score++;
-    });
-
-    const percentage = Math.round((score / currentQuiz.length) * 100);
-
-    state.quizzes.push({
-        difficulty: currentDifficulty,
-        score: score,
-        total: currentQuiz.length,
-        percentage: percentage,
-        date: new Date().toISOString()
-    });
-
-    updateStreak();
-    saveState();
-    updateDashboard();
-    showQuizResult(score, percentage);
-}
-
-function showQuizResult(score, percentage) {
-    const quizArea = document.getElementById("quizArea");
-    let message;
-
-    if (percentage >= 90) {
-        message = "Excellent! You have mastered this level. 🏆";
-    } else if (percentage >= 70) {
-        message = "Great job! You have successfully passed. 🎉";
-    } else if (percentage >= 50) {
-        message = "Good effort! Keep practicing to improve.";
-    } else {
-        message = "Don't give up. Practice and try again!";
-    }
-
-    quizArea.innerHTML = `
-        <div class="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-sm text-center">
-            <div class="text-6xl mb-4">${percentage >= 70 ? "🎉" : "📚"}</div>
-            <h2 class="text-3xl font-bold mb-5">Quiz Completed!</h2>
-            <div class="w-36 h-36 mx-auto mb-6 rounded-full bg-gradient-to-br from-[#6c63ff] to-[#9b8cff] text-white flex flex-col items-center justify-center">
-                <strong class="text-4xl">${percentage}%</strong>
-                <span>${score}/${currentQuiz.length}</span>
-            </div>
-            <h3 class="text-xl font-bold mb-2">${message}</h3>
-            <p class="text-gray-500 mb-5">Difficulty: <strong>${currentDifficulty.toUpperCase()}</strong></p>
-            <div class="flex gap-3 justify-center flex-wrap">
-                <button onclick="startQuiz('${currentDifficulty}')" class="px-5 py-3 rounded-xl text-white font-bold bg-gradient-to-r from-[#6c63ff] to-[#8e7dff]">Try Again</button>
-                <button onclick="showPage('topics')" class="px-5 py-3 rounded-xl bg-gray-200 font-bold">Other Quizzes</button>
-            </div>
-        </div>
-    `;
-}
-
-function updateDashboard() {
-    if (!currentUser) return;
 
     updateStreak();
 
-    document.getElementById("dashboardName").textContent = currentUser.name;
-    document.getElementById("topUserName").textContent = currentUser.name;
 
-    const firstLetter = currentUser.name.charAt(0).toUpperCase();
-    document.getElementById("avatar").textContent = firstLetter;
-    document.getElementById("profileAvatar").textContent = firstLetter;
+    document.getElementById("dashboardName")
+        .textContent =
+        currentUser.name || "Student";
 
-    document.getElementById("streakValue").textContent = state.streak;
-    document.getElementById("quizCount").textContent = state.quizzes.length;
+
+    document.getElementById("topUserName")
+        .textContent =
+        currentUser.name || "Student";
+
+
+    const firstLetter =
+        (currentUser.name || "Student")
+        .charAt(0)
+        .toUpperCase();
+
+
+    document.getElementById("avatar")
+        .textContent =
+        firstLetter;
+
+
+    document.getElementById("profileAvatar")
+        .textContent =
+        firstLetter;
+
+
+    document.getElementById("streakValue")
+        .textContent =
+        state.streak;
+
+
+    document.getElementById("quizCount")
+        .textContent =
+        state.quizzes.length;
+
 
     let average = 0;
+
+
     if (state.quizzes.length > 0) {
-        average = Math.round(state.quizzes.reduce((sum, quiz) => sum + quiz.percentage, 0) / state.quizzes.length);
+
+        average =
+            Math.round(
+                state.quizzes.reduce(
+                    (sum, quiz) =>
+                        sum + quiz.percentage,
+                    0
+                ) /
+                state.quizzes.length
+            );
+
     }
 
-    document.getElementById("averageScore").textContent = average + "%";
+
+    document.getElementById("averageScore")
+        .textContent =
+        average + "%";
+
 
     updateDifficultyProgress("easy");
+
     updateDifficultyProgress("medium");
+
     updateDifficultyProgress("hard");
 
-    let recommendation = "Start with an Easy quiz to build your confidence.";
+
+    let recommendation =
+        "Start with an Easy quiz to build your confidence.";
+
+
     if (average >= 80) {
-        recommendation = "Excellent performance! Try a Hard quiz next. 🔥";
+
+        recommendation =
+            "Excellent performance! Try a Hard quiz next. 🔥";
+
     } else if (average >= 60) {
-        recommendation = "You're doing well! Try a Medium quiz to improve.";
+
+        recommendation =
+            "You're doing well! Try a Medium quiz to improve.";
+
     }
 
-    document.getElementById("recommendation").textContent = recommendation;
+
+    document.getElementById("recommendation")
+        .textContent =
+        recommendation;
+
 }
+
 
 function updateDifficultyProgress(level) {
-    const attempts = state.quizzes.filter(quiz => quiz.difficulty === level);
+
+    const attempts =
+        state.quizzes.filter(
+            quiz =>
+                quiz.difficulty === level
+        );
+
+
     let progress = 0;
 
+
     if (attempts.length > 0) {
-        progress = Math.min(attempts.length * 20, 100);
+
+        progress =
+            Math.min(
+                attempts.length * 20,
+                100
+            );
+
     }
 
-    document.getElementById(level + "Progress").style.width = progress + "%";
-    document.getElementById(level + "ProgressText").textContent = progress + "%";
+
+    document.getElementById(
+        level + "Progress"
+    ).style.width =
+        progress + "%";
+
+
+    document.getElementById(
+        level + "ProgressText"
+    ).textContent =
+        progress + "%";
+
 }
+
 
 function loadProfile() {
-    if (!currentUser) return;
 
-    document.getElementById("profileName").value = currentUser.name || "";
-    document.getElementById("profileEmail").value = currentUser.email || "";
-    document.getElementById("profileCollege").value = currentUser.college || "";
-    document.getElementById("profileCourse").value = currentUser.course || "";
-    document.getElementById("profileYear").value = currentUser.year || "";
-    document.getElementById("profileLanguage").value = currentUser.language || "English";
-    document.getElementById("profileDisplayName").textContent = currentUser.name || "Student";
+    if (!currentUser) {
+        return;
+    }
+
+
+    document.getElementById("profileName")
+        .value =
+        currentUser.name || "Student";
+
+
+    document.getElementById("profileEmail")
+        .value =
+        currentUser.email || "";
+
+
+    document.getElementById("profileCollege")
+        .value =
+        currentUser.college || "";
+
+
+    document.getElementById("profileCourse")
+        .value =
+        currentUser.course || "";
+
+
+    document.getElementById("profileYear")
+        .value =
+        currentUser.year || "";
+
+
+    document.getElementById("profileLanguage")
+        .value =
+        currentUser.language || "English";
+
+
+    document.getElementById("profileDisplayName")
+        .textContent =
+        currentUser.name || "Student";
+
 }
+
 
 function saveProfile() {
-    if (!currentUser) return;
 
-    currentUser.name = document.getElementById("profileName").value.trim();
-    currentUser.college = document.getElementById("profileCollege").value.trim();
-    currentUser.course = document.getElementById("profileCourse").value.trim();
-    currentUser.year = document.getElementById("profileYear").value.trim();
-    currentUser.language = document.getElementById("profileLanguage").value;
+    if (!currentUser) {
+        return;
+    }
 
-    localStorage.setItem("learnAIUser", JSON.stringify(currentUser));
+
+    const name =
+        document.getElementById("profileName")
+        .value
+        .trim();
+
+
+    currentUser.name =
+        name || "Student";
+
+
+    currentUser.college =
+        document.getElementById("profileCollege")
+        .value
+        .trim();
+
+
+    currentUser.course =
+        document.getElementById("profileCourse")
+        .value
+        .trim();
+
+
+    currentUser.year =
+        document.getElementById("profileYear")
+        .value
+        .trim();
+
+
+    currentUser.language =
+        document.getElementById("profileLanguage")
+        .value;
+
+
+    localStorage.setItem(
+        "learnAIUser",
+        JSON.stringify(currentUser)
+    );
+
+
     loadProfile();
+
     updateDashboard();
+
     showToast("Profile saved successfully ✓");
+
 }
 
-window.onload = function () {
-    if (currentUser) {
-        openApp();
-    } else {
-        document.getElementById("authPage").classList.remove("hidden");
-        document.getElementById("app").classList.add("hidden");
-    }
+
+window.onload = function() {
+
+    loadProfile();
+
+    updateDashboard();
+
+    showPage("dashboard");
+
 };
+
 </script>
 
 </body>

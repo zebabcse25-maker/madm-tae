@@ -1,323 +1,294 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LearnAI Quiz Engine</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LearnAI Quiz Engine</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com"></script>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
+<script>
+tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+            colors: {
+                slate: {
+                    850: "#172033"
+                }
+            }
         }
+    }
+}
+</script>
 
-        .option:hover {
-            background-color: #334155;
-        }
+<style>
+body {
+    font-family: Arial, sans-serif;
+}
 
-        .selected {
-            border-color: #8b5cf6;
-            background-color: #312e81;
-        }
-    </style>
+.option:hover {
+    background-color: #334155;
+}
+
+.selected {
+    border-color: #8b5cf6;
+    background-color: #312e81;
+}
+</style>
 </head>
 
-<body class="bg-slate-900 text-white min-h-screen">
+<body class="bg-slate-950 text-white min-h-screen">
 
-<header class="bg-slate-800 border-b border-slate-700">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-
+<header class="bg-slate-900 border-b border-slate-700 px-6 py-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
         <div>
-            <h1 class="text-2xl font-bold">LearnAI Quiz Engine</h1>
+            <h1 class="text-xl font-bold">LearnAI Quiz Engine</h1>
             <p class="text-sm text-slate-400">Adaptive Student Learning</p>
         </div>
 
-        <button onclick="showScreen('dashboard')"
-            class="bg-red-700 px-4 py-2 rounded-lg hover:bg-slate-600">
+        <button onclick="showDashboard()"
+            class="bg-red-700 hover:bg-red-800 px-4 py-2 rounded-lg text-sm">
             Dashboard
         </button>
-
     </div>
 </header>
 
-
-<main class="max-w-6xl mx-auto px-6 py-8">
+<main class="max-w-7xl mx-auto px-6 py-8">
 
     <section id="setupScreen">
 
         <div class="mb-8">
-
-            <p class="text-purple-400 text-sm font-semibold">
+            <p class="text-purple-400 text-sm font-semibold mb-2">
                 ASSESSMENT PORTAL
             </p>
 
-            <h2 class="text-3xl font-bold mt-2">
+            <h2 class="text-3xl font-bold">
                 Assessment Configuration
             </h2>
 
             <p class="text-slate-400 mt-2">
-                Select your topic and difficulty level to start the quiz.
+                Configure your quiz and test your knowledge.
             </p>
-
         </div>
 
+        <div class="bg-slate-900 border border-slate-700 rounded-xl p-6 max-w-3xl">
 
-        <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
-
-            <div class="grid md:grid-cols-3 gap-5">
+            <div class="grid md:grid-cols-2 gap-6">
 
                 <div>
-
-                    <label class="block mb-2 text-sm text-slate-300">
-                        Subject Topic
+                    <label class="block text-sm text-slate-300 mb-2">
+                        Topic
                     </label>
 
                     <select id="topicSelect"
-                        class="w-full bg-slate-900 border border-slate-600 rounded-lg p-3">
-
+                        class="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3">
                         <option value="All Topics">All Topics</option>
                         <option value="Data Structures">Data Structures</option>
                         <option value="Web Development">Web Development</option>
                         <option value="Database Systems">Database Systems</option>
-
                     </select>
-
                 </div>
 
-
                 <div>
-
-                    <label class="block mb-2 text-sm text-slate-300">
+                    <label class="block text-sm text-slate-300 mb-2">
                         Difficulty
                     </label>
 
                     <select id="difficultySelect"
-                        class="w-full bg-slate-900 border border-slate-600 rounded-lg p-3">
-
+                        class="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3">
                         <option value="Easy">Easy</option>
                         <option value="Medium">Medium</option>
                         <option value="Hard">Hard</option>
-
                     </select>
-
                 </div>
 
-
                 <div>
-
-                    <label class="block mb-2 text-sm text-slate-300">
+                    <label class="block text-sm text-slate-300 mb-2">
                         Question Count
                     </label>
 
                     <select id="countSelect"
-                        class="w-full bg-slate-900 border border-slate-600 rounded-lg p-3">
-
+                        class="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3">
                         <option value="10">10 Questions</option>
-
                     </select>
-
                 </div>
 
             </div>
-
 
             <button onclick="startQuiz()"
                 class="mt-6 bg-purple-600 hover:bg-purple-700 px-6 py-3 rounded-lg font-semibold">
                 Start Assessment
             </button>
-
         </div>
-
 
         <div class="grid md:grid-cols-3 gap-5 mt-8">
 
-            <div class="bg-slate-800 p-5 rounded-xl border border-slate-700">
-
-                <h3 class="font-bold text-lg">
-                    Data Structures
-                </h3>
-
+            <div class="bg-slate-900 border border-slate-700 rounded-xl p-6">
+                <h3 class="font-bold text-lg">Data Structures</h3>
                 <p class="text-slate-400 text-sm mt-2">
-                    Practice arrays, stacks, queues, trees and hashing.
+                    Arrays, stacks, queues, trees, graphs and algorithms.
                 </p>
-
             </div>
 
-
-            <div class="bg-slate-800 p-5 rounded-xl border border-slate-700">
-
-                <h3 class="font-bold text-lg">
-                    Web Development
-                </h3>
-
+            <div class="bg-slate-900 border border-slate-700 rounded-xl p-6">
+                <h3 class="font-bold text-lg">Web Development</h3>
                 <p class="text-slate-400 text-sm mt-2">
-                    Test your knowledge of HTML, CSS and JavaScript.
+                    HTML, CSS, JavaScript and DOM concepts.
                 </p>
-
             </div>
 
-
-            <div class="bg-slate-800 p-5 rounded-xl border border-slate-700">
-
-                <h3 class="font-bold text-lg">
-                    Database Systems
-                </h3>
-
+            <div class="bg-slate-900 border border-slate-700 rounded-xl p-6">
+                <h3 class="font-bold text-lg">Database Systems</h3>
                 <p class="text-slate-400 text-sm mt-2">
-                    Practice SQL, keys, normalization and transactions.
+                    SQL, keys, normalization and transactions.
                 </p>
-
             </div>
 
         </div>
-
     </section>
 
 
     <section id="quizScreen" class="hidden">
 
-        <div class="flex justify-between items-center mb-5">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
 
             <div>
-
-                <p class="text-sm text-slate-400">
-                    Question
+                <p class="text-purple-400 text-sm font-semibold">
+                    ASSESSMENT IN PROGRESS
                 </p>
 
-                <h2 id="questionNumber"
-                    class="text-2xl font-bold">
+                <h2 id="questionTitle"
+                    class="text-2xl font-bold mt-1">
+                    Question 1
                 </h2>
-
             </div>
 
             <div id="progressText"
-                class="text-purple-400 font-semibold">
+                class="text-slate-300 font-semibold">
+                1 / 10
             </div>
 
         </div>
 
 
-        <div class="w-full bg-slate-700 rounded-full h-2 mb-8">
+        <div class="grid lg:grid-cols-4 gap-6">
 
-            <div id="progressBar"
-                class="bg-purple-600 h-2 rounded-full"
-                style="width:0%">
+            <div class="lg:col-span-3">
+
+                <div class="bg-slate-900 border border-slate-700 rounded-xl p-6">
+
+                    <div class="flex flex-wrap gap-2 mb-5">
+                        <span id="topicBadge"
+                            class="bg-purple-900 text-purple-200 px-3 py-1 rounded-full text-xs">
+                            Topic
+                        </span>
+
+                        <span id="subtopicBadge"
+                            class="bg-slate-700 text-slate-200 px-3 py-1 rounded-full text-xs">
+                            Subtopic
+                        </span>
+
+                        <span id="difficultyBadge"
+                            class="bg-slate-700 text-slate-200 px-3 py-1 rounded-full text-xs">
+                            Difficulty
+                        </span>
+                    </div>
+
+                    <h3 id="questionText"
+                        class="text-xl font-semibold leading-relaxed mb-6">
+                    </h3>
+
+                    <div id="optionsContainer"
+                        class="space-y-3">
+                    </div>
+
+                    <button onclick="clearSelection()"
+                        class="mt-5 text-sm text-slate-400 hover:text-white">
+                        Clear Selection
+                    </button>
+
+                    <div class="flex justify-between mt-8">
+
+                        <button id="previousBtn"
+                            onclick="previousQuestion()"
+                            class="bg-slate-700 hover:bg-slate-600 px-5 py-2.5 rounded-lg">
+                            Previous
+                        </button>
+
+                        <div class="flex gap-3">
+
+                            <button id="nextBtn"
+                                onclick="nextQuestion()"
+                                class="bg-purple-600 hover:bg-purple-700 px-5 py-2.5 rounded-lg">
+                                Next
+                            </button>
+
+                            <button id="submitBtn"
+                                onclick="openSubmitModal()"
+                                class="hidden bg-green-600 hover:bg-green-700 px-5 py-2.5 rounded-lg">
+                                Submit Assessment
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
+
+
+            <aside class="bg-slate-900 border border-slate-700 rounded-xl p-5 h-fit">
+
+                <h3 class="font-bold mb-4">
+                    Question Palette
+                </h3>
+
+                <div id="questionPalette"
+                    class="grid grid-cols-5 gap-2">
+                </div>
+
+                <div class="border-t border-slate-700 mt-5 pt-5 space-y-3 text-sm">
+
+                    <div class="flex justify-between">
+                        <span class="text-slate-400">Answered</span>
+                        <span id="answeredCount">0</span>
+                    </div>
+
+                    <div class="flex justify-between">
+                        <span class="text-slate-400">Skipped</span>
+                        <span id="skippedCount">0</span>
+                    </div>
+
+                    <div class="flex justify-between">
+                        <span class="text-slate-400">Remaining</span>
+                        <span id="remainingCount">10</span>
+                    </div>
+
+                </div>
+
+            </aside>
 
         </div>
-
-
-        <div class="bg-slate-800 rounded-xl border border-slate-700 p-6">
-
-            <div class="flex flex-wrap gap-2 mb-5">
-
-                <span id="topicBadge"
-                    class="bg-purple-900 text-purple-300 px-3 py-1 rounded-full text-sm">
-                </span>
-
-                <span id="subtopicBadge"
-                    class="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm">
-                </span>
-
-                <span id="difficultyBadge"
-                    class="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm">
-                </span>
-
-            </div>
-
-
-            <h3 id="questionText"
-                class="text-xl font-semibold mb-6">
-            </h3>
-
-
-            <div id="optionsContainer"
-                class="space-y-3">
-            </div>
-
-
-            <button onclick="clearSelection()"
-                class="mt-5 text-sm text-slate-400 hover:text-white">
-                Clear Selection
-            </button>
-
-
-            <div class="flex justify-between mt-8">
-
-                <button id="previousBtn"
-                    onclick="previousQuestion()"
-                    class="px-5 py-2 rounded-lg bg-slate-700 hover:bg-slate-600">
-                    Previous
-                </button>
-
-
-                <button id="nextBtn"
-                    onclick="nextQuestion()"
-                    class="px-5 py-2 rounded-lg bg-purple-600 hover:bg-purple-700">
-                    Next
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="mt-8 bg-slate-800 p-5 rounded-xl border border-slate-700">
-
-            <h3 class="font-bold mb-4">
-                Question Palette
-            </h3>
-
-            <div id="questionPalette"
-                class="flex flex-wrap gap-2">
-            </div>
-
-
-            <div class="flex gap-6 mt-5 text-sm text-slate-400">
-
-                <span>
-                    Answered:
-                    <b id="answeredCount">0</b>
-                </span>
-
-                <span>
-                    Skipped:
-                    <b id="skippedCount">0</b>
-                </span>
-
-                <span>
-                    Remaining:
-                    <b id="remainingCount">0</b>
-                </span>
-
-            </div>
-
-        </div>
-
     </section>
 
 
     <section id="analyticsScreen" class="hidden">
 
-        <div class="flex justify-between items-center mb-8">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
 
             <div>
-
                 <p class="text-purple-400 text-sm font-semibold">
                     DIAGNOSTIC REPORT
                 </p>
 
-                <h2 class="text-3xl font-bold mt-1">
+                <h2 class="text-3xl font-bold">
                     Assessment Report
                 </h2>
-
             </div>
 
-
-            <button onclick="showScreen('setup')"
-                class="bg-purple-600 hover:bg-purple-700 px-5 py-2 rounded-lg">
+            <button onclick="showSetup()"
+                class="bg-purple-600 hover:bg-purple-700 px-5 py-2.5 rounded-lg">
                 Take New Assessment
             </button>
 
@@ -326,119 +297,85 @@
 
         <div class="grid md:grid-cols-3 gap-5 mb-8">
 
-            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
-
-                <p class="text-slate-400">
-                    Score
-                </p>
-
-                <h3 id="finalScore"
+            <div class="bg-slate-900 border border-slate-700 rounded-xl p-6">
+                <p class="text-slate-400 text-sm">Score</p>
+                <h3 id="scoreDisplay"
                     class="text-3xl font-bold mt-2">
                     0%
                 </h3>
-
             </div>
 
-
-            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
-
-                <p class="text-slate-400">
-                    Correct Answers
-                </p>
-
-                <h3 id="correctAnswers"
+            <div class="bg-slate-900 border border-slate-700 rounded-xl p-6">
+                <p class="text-slate-400 text-sm">Correct Answers</p>
+                <h3 id="correctDisplay"
                     class="text-3xl font-bold mt-2">
                     0
                 </h3>
-
             </div>
 
-
-            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
-
-                <p class="text-slate-400">
-                    Total Questions
-                </p>
-
-                <h3 id="totalQuestions"
+            <div class="bg-slate-900 border border-slate-700 rounded-xl p-6">
+                <p class="text-slate-400 text-sm">Total Questions</p>
+                <h3 id="totalDisplay"
                     class="text-3xl font-bold mt-2">
                     0
                 </h3>
-
             </div>
 
         </div>
 
 
-        <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 mb-8">
+        <div class="bg-slate-900 border border-slate-700 rounded-xl p-6 mb-8">
 
             <h3 class="text-xl font-bold mb-5">
                 Overall Performance
             </h3>
 
+            <div class="flex justify-between text-sm mb-2">
+                <span>Score Progress</span>
+                <span id="analyticsScoreText">0%</span>
+            </div>
 
-            <div class="grid md:grid-cols-2 gap-5">
-
-                <div>
-
-                    <p class="text-slate-400 text-sm">
-                        Overall Score
-                    </p>
-
-                    <div class="w-full bg-slate-700 rounded-full h-3 mt-2">
-
-                        <div id="scoreProgress"
-                            class="bg-purple-600 h-3 rounded-full"
-                            style="width:0%">
-                        </div>
-
-                    </div>
-
+            <div class="w-full bg-slate-700 rounded-full h-3">
+                <div id="analyticsProgress"
+                    class="bg-purple-600 h-3 rounded-full"
+                    style="width:0%">
                 </div>
+            </div>
 
+            <div class="mt-5">
+                <p class="text-slate-400">
+                    Accuracy
+                </p>
 
-                <div>
-
-                    <p class="text-slate-400 text-sm">
-                        Accuracy
-                    </p>
-
-                    <p id="accuracyText"
-                        class="text-2xl font-bold mt-2">
-                        0%
-                    </p>
-
-                </div>
-
+                <p id="accuracyText"
+                    class="text-xl font-bold mt-1">
+                    0%
+                </p>
             </div>
 
         </div>
 
 
-        <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+        <div class="bg-slate-900 border border-slate-700 rounded-xl p-6">
 
             <h3 class="text-xl font-bold mb-5">
                 Topic Performance
             </h3>
 
-
             <div class="overflow-x-auto">
 
                 <table class="w-full text-left">
 
-                    <thead class="border-b border-slate-700">
-
-                        <tr>
-                            <th class="p-3">Topic</th>
-                            <th class="p-3">Correct</th>
-                            <th class="p-3">Accuracy</th>
-                            <th class="p-3">Difficulty</th>
-                            <th class="p-3">Status</th>
+                    <thead>
+                        <tr class="border-b border-slate-700">
+                            <th class="py-3">Topic</th>
+                            <th class="py-3">Questions</th>
+                            <th class="py-3">Correct</th>
+                            <th class="py-3">Accuracy</th>
                         </tr>
-
                     </thead>
 
-                    <tbody id="performanceTable">
+                    <tbody id="topicPerformance">
                     </tbody>
 
                 </table>
@@ -453,23 +390,24 @@
     <section id="dashboardScreen" class="hidden">
 
         <div class="mb-8">
-
             <p class="text-purple-400 text-sm font-semibold">
-                LEARNAI
+                LEARNER OVERVIEW
             </p>
 
-            <h2 class="text-3xl font-bold mt-1">
+            <h2 class="text-3xl font-bold">
                 Student Dashboard
             </h2>
 
+            <p class="text-slate-400 mt-2">
+                Track your quiz performance and progress.
+            </p>
         </div>
 
 
-        <div class="grid md:grid-cols-3 gap-5">
+        <div class="grid md:grid-cols-3 gap-5 mb-8">
 
-            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
-
-                <p class="text-slate-400">
+            <div class="bg-slate-900 border border-slate-700 rounded-xl p-6">
+                <p class="text-slate-400 text-sm">
                     Quizzes Completed
                 </p>
 
@@ -477,13 +415,10 @@
                     class="text-3xl font-bold mt-2">
                     0
                 </h3>
-
             </div>
 
-
-            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
-
-                <p class="text-slate-400">
+            <div class="bg-slate-900 border border-slate-700 rounded-xl p-6">
+                <p class="text-slate-400 text-sm">
                     Average Accuracy
                 </p>
 
@@ -491,13 +426,10 @@
                     class="text-3xl font-bold mt-2">
                     0%
                 </h3>
-
             </div>
 
-
-            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
-
-                <p class="text-slate-400">
+            <div class="bg-slate-900 border border-slate-700 rounded-xl p-6">
+                <p class="text-slate-400 text-sm">
                     Best Performance
                 </p>
 
@@ -505,60 +437,41 @@
                     class="text-3xl font-bold mt-2">
                     0%
                 </h3>
-
             </div>
 
         </div>
 
 
-        <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 mt-8">
+        <div class="bg-slate-900 border border-slate-700 rounded-xl p-6 mb-8">
 
-            <h3 class="text-xl font-bold mb-5">
+            <h3 class="text-xl font-bold mb-6">
                 Difficulty Based Scores
             </h3>
 
-
             <div class="grid md:grid-cols-3 gap-5">
 
-                <div class="bg-slate-900 p-5 rounded-lg">
-
-                    <p class="text-slate-400">
-                        Easy
-                    </p>
-
+                <div class="bg-slate-800 rounded-lg p-5">
+                    <p class="text-slate-400">Easy</p>
                     <p id="easyScore"
                         class="text-2xl font-bold mt-2">
                         0%
                     </p>
-
                 </div>
 
-
-                <div class="bg-slate-900 p-5 rounded-lg">
-
-                    <p class="text-slate-400">
-                        Medium
-                    </p>
-
+                <div class="bg-slate-800 rounded-lg p-5">
+                    <p class="text-slate-400">Medium</p>
                     <p id="mediumScore"
                         class="text-2xl font-bold mt-2">
                         0%
                     </p>
-
                 </div>
 
-
-                <div class="bg-slate-900 p-5 rounded-lg">
-
-                    <p class="text-slate-400">
-                        Hard
-                    </p>
-
+                <div class="bg-slate-800 rounded-lg p-5">
+                    <p class="text-slate-400">Hard</p>
                     <p id="hardScore"
                         class="text-2xl font-bold mt-2">
                         0%
                     </p>
-
                 </div>
 
             </div>
@@ -566,8 +479,8 @@
         </div>
 
 
-        <button onclick="showScreen('setup')"
-            class="mt-8 bg-purple-600 hover:bg-purple-700 px-6 py-3 rounded-lg font-semibold">
+        <button onclick="showSetup()"
+            class="bg-purple-600 hover:bg-purple-700 px-6 py-3 rounded-lg font-semibold">
             Start New Quiz
         </button>
 
@@ -577,9 +490,9 @@
 
 
 <div id="submitModal"
-    class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center px-5">
+    class="hidden fixed inset-0 bg-black/70 flex items-center justify-center px-4">
 
-    <div class="bg-slate-800 rounded-xl p-6 max-w-md w-full border border-slate-700">
+    <div class="bg-slate-900 border border-slate-700 rounded-xl p-6 w-full max-w-md">
 
         <h3 class="text-xl font-bold">
             Submit Assessment?
@@ -589,64 +502,62 @@
             Are you sure you want to submit your assessment?
         </p>
 
-
         <div class="flex justify-end gap-3 mt-6">
 
-            <button onclick="closeModal()"
-                class="bg-slate-700 px-5 py-2 rounded-lg">
+            <button onclick="closeSubmitModal()"
+                class="bg-slate-700 hover:bg-slate-600 px-5 py-2.5 rounded-lg">
                 Cancel
             </button>
 
             <button onclick="submitQuizFinal()"
-                class="bg-purple-600 px-5 py-2 rounded-lg">
+                class="bg-green-600 hover:bg-green-700 px-5 py-2.5 rounded-lg">
                 Submit
             </button>
 
         </div>
 
     </div>
-
 </div>
 
 
 <script>
 
-const questions = [
+const questionBank = [
 
     {
         topic: "Data Structures",
         subtopic: "Arrays",
         difficulty: "Easy",
         question: "Which data structure stores elements in contiguous memory locations?",
-        options: ["Linked List", "Array", "Stack", "Tree"],
-        answer: 1
+        options: ["Array", "Linked List", "Stack", "Graph"],
+        answer: "Array"
     },
 
     {
         topic: "Data Structures",
         subtopic: "Stacks",
         difficulty: "Easy",
-        question: "Which principle is followed by a stack?",
-        options: ["FIFO", "LIFO", "Random Access", "Priority"],
-        answer: 1
+        question: "Which principle does a stack follow?",
+        options: ["FIFO", "LIFO", "FILO only", "Random Access"],
+        answer: "LIFO"
     },
 
     {
         topic: "Data Structures",
         subtopic: "Queues",
         difficulty: "Easy",
-        question: "Which principle is followed by a queue?",
-        options: ["LIFO", "FIFO", "Random", "Priority"],
-        answer: 1
+        question: "Which principle does a queue follow?",
+        options: ["LIFO", "FIFO", "Random Access", "Binary Search"],
+        answer: "FIFO"
     },
 
     {
         topic: "Data Structures",
         subtopic: "Linked Lists",
         difficulty: "Easy",
-        question: "Which data structure uses nodes connected using links?",
-        options: ["Array", "Linked List", "Stack", "Heap"],
-        answer: 1
+        question: "A linked list is made up of elements called?",
+        options: ["Nodes", "Indexes", "Rows", "Buckets"],
+        answer: "Nodes"
     },
 
     {
@@ -654,26 +565,26 @@ const questions = [
         subtopic: "Binary Search Trees",
         difficulty: "Medium",
         question: "What is the average search time in a balanced Binary Search Tree?",
-        options: ["O(n)", "O(log n)", "O(n log n)", "O(1)"],
-        answer: 1
+        options: ["O(1)", "O(log n)", "O(n)", "O(n²)"],
+        answer: "O(log n)"
     },
 
     {
         topic: "Data Structures",
         subtopic: "Hash Tables",
         difficulty: "Medium",
-        question: "What happens when two keys are mapped to the same slot in a hash table?",
-        options: ["Overflow", "Collision", "Sorting", "Traversal"],
-        answer: 1
+        question: "What is it called when two keys map to the same hash table slot?",
+        options: ["Overflow", "Collision", "Duplication", "Traversal"],
+        answer: "Collision"
     },
 
     {
         topic: "Data Structures",
         subtopic: "Trees",
         difficulty: "Medium",
-        question: "Which traversal visits the root between the left and right subtrees?",
-        options: ["Preorder", "Inorder", "Postorder", "Level Order"],
-        answer: 1
+        question: "Which traversal visits the left subtree, root, and then right subtree?",
+        options: ["Preorder", "Postorder", "Inorder", "Level Order"],
+        answer: "Inorder"
     },
 
     {
@@ -681,17 +592,17 @@ const questions = [
         subtopic: "Heaps",
         difficulty: "Hard",
         question: "Which data structure is commonly used to implement a priority queue?",
-        options: ["Array", "Heap", "Linked List", "Stack"],
-        answer: 1
+        options: ["Stack", "Heap", "Linked List", "Graph"],
+        answer: "Heap"
     },
 
     {
         topic: "Data Structures",
         subtopic: "Graphs",
         difficulty: "Hard",
-        question: "Which algorithm is commonly used to find the shortest path in a weighted graph with non-negative edges?",
-        options: ["DFS", "BFS", "Dijkstra's Algorithm", "Binary Search"],
-        answer: 2
+        question: "Which algorithm is commonly used to find the shortest path in a graph with non-negative edge weights?",
+        options: ["Dijkstra's Algorithm", "DFS", "Bubble Sort", "Kruskal's Algorithm"],
+        answer: "Dijkstra's Algorithm"
     },
 
     {
@@ -700,7 +611,7 @@ const questions = [
         difficulty: "Hard",
         question: "Which sorting algorithm has an average time complexity of O(n log n)?",
         options: ["Bubble Sort", "Selection Sort", "Merge Sort", "Linear Search"],
-        answer: 2
+        answer: "Merge Sort"
     },
 
 
@@ -709,35 +620,35 @@ const questions = [
         subtopic: "HTML",
         difficulty: "Easy",
         question: "Which HTML tag is used to create a hyperlink?",
-        options: ["<p>", "<a>", "<link>", "<href>"],
-        answer: 1
+        options: ["<a>", "<link>", "<href>", "<url>"],
+        answer: "<a>"
     },
 
     {
         topic: "Web Development",
         subtopic: "HTML",
         difficulty: "Easy",
-        question: "Which tag is used to create the largest heading in HTML?",
-        options: ["<h6>", "<heading>", "<h1>", "<head>"],
-        answer: 2
+        question: "Which HTML tag represents the largest heading?",
+        options: ["<h6>", "<h3>", "<heading>", "<h1>"],
+        answer: "<h1>"
     },
 
     {
         topic: "Web Development",
         subtopic: "CSS",
         difficulty: "Easy",
-        question: "Which CSS property is used to change the text color?",
-        options: ["font-style", "background", "color", "text-style"],
-        answer: 2
+        question: "Which CSS property is used to change text color?",
+        options: ["font-color", "text-color", "color", "foreground"],
+        answer: "color"
     },
 
     {
         topic: "Web Development",
         subtopic: "HTML Forms",
         difficulty: "Easy",
-        question: "Which HTML element is used to collect user input?",
-        options: ["<input>", "<data>", "<collect>", "<text>"],
-        answer: 0
+        question: "Which HTML element is commonly used to accept user input?",
+        options: ["<input>", "<data>", "<formtext>", "<enter>"],
+        answer: "<input>"
     },
 
     {
@@ -745,17 +656,17 @@ const questions = [
         subtopic: "CSS Flexbox",
         difficulty: "Medium",
         question: "Which CSS declaration creates a flex container?",
-        options: ["display: flex", "position: flex", "flex: display", "layout: flex"],
-        answer: 0
+        options: ["display: grid", "display: flex", "position: flex", "flex: display"],
+        answer: "display: flex"
     },
 
     {
         topic: "Web Development",
         subtopic: "JavaScript",
         difficulty: "Medium",
-        question: "Which keyword is used to declare a block-scoped variable?",
+        question: "Which JavaScript keyword creates a block-scoped variable?",
         options: ["var", "let", "define", "variable"],
-        answer: 1
+        answer: "let"
     },
 
     {
@@ -765,29 +676,29 @@ const questions = [
         question: "What does DOM stand for?",
         options: [
             "Document Object Model",
-            "Data Object Model",
+            "Data Object Management",
             "Document Oriented Method",
-            "Data Oriented Model"
+            "Digital Object Model"
         ],
-        answer: 0
+        answer: "Document Object Model"
     },
 
     {
         topic: "Web Development",
         subtopic: "JavaScript Runtime",
         difficulty: "Medium",
-        question: "Which queue is processed first after the current JavaScript task is completed?",
-        options: ["Callback queue", "Microtask queue", "Event queue", "Stack queue"],
-        answer: 1
+        question: "Which queue is generally processed before the task queue in JavaScript?",
+        options: ["Microtask Queue", "Render Queue", "Network Queue", "Timer Queue"],
+        answer: "Microtask Queue"
     },
 
     {
         topic: "Web Development",
         subtopic: "JavaScript",
         difficulty: "Hard",
-        question: "Which method is used to convert a JSON string into a JavaScript object?",
-        options: ["JSON.parse()", "JSON.stringify()", "JSON.convert()", "JSON.object()"],
-        answer: 0
+        question: "Which method converts a JSON string into a JavaScript object?",
+        options: ["JSON.convert()", "JSON.parse()", "JSON.object()", "JSON.read()"],
+        answer: "JSON.parse()"
     },
 
     {
@@ -795,18 +706,18 @@ const questions = [
         subtopic: "JavaScript",
         difficulty: "Hard",
         question: "Which method converts a JavaScript object into a JSON string?",
-        options: ["JSON.parse()", "JSON.stringify()", "JSON.convert()", "JSON.toObject()"],
-        answer: 1
+        options: ["JSON.stringify()", "JSON.parse()", "JSON.convert()", "JSON.string()"],
+        answer: "JSON.stringify()"
     },
 
 
     {
         topic: "Database Systems",
-        subtopic: "ACID Properties",
+        subtopic: "ACID",
         difficulty: "Easy",
-        question: "What does A in ACID stand for?",
-        options: ["Availability", "Atomicity", "Accuracy", "Access"],
-        answer: 1
+        question: "In ACID properties, what does A stand for?",
+        options: ["Availability", "Atomicity", "Accuracy", "Authorization"],
+        answer: "Atomicity"
     },
 
     {
@@ -814,26 +725,26 @@ const questions = [
         subtopic: "SQL",
         difficulty: "Easy",
         question: "Which SQL command is used to retrieve data from a database?",
-        options: ["INSERT", "UPDATE", "SELECT", "DELETE"],
-        answer: 2
+        options: ["GET", "SELECT", "FETCH", "OPEN"],
+        answer: "SELECT"
     },
 
     {
         topic: "Database Systems",
         subtopic: "SQL",
         difficulty: "Easy",
-        question: "Which SQL command is used to add a new record to a table?",
+        question: "Which SQL command is used to add a new record?",
         options: ["ADD", "INSERT", "CREATE", "UPDATE"],
-        answer: 1
+        answer: "INSERT"
     },
 
     {
         topic: "Database Systems",
         subtopic: "Keys",
         difficulty: "Easy",
-        question: "Which key uniquely identifies each record in a table?",
-        options: ["Foreign Key", "Primary Key", "Candidate Key", "Alternate Key"],
-        answer: 1
+        question: "Which key uniquely identifies a record in a table?",
+        options: ["Foreign Key", "Primary Key", "Candidate Key", "Composite Key"],
+        answer: "Primary Key"
     },
 
     {
@@ -842,30 +753,30 @@ const questions = [
         difficulty: "Medium",
         question: "Which SQL clause is used to sort query results?",
         options: ["SORT BY", "ORDER BY", "GROUP BY", "ARRANGE BY"],
-        answer: 1
+        answer: "ORDER BY"
     },
 
     {
         topic: "Database Systems",
         subtopic: "Normalization",
         difficulty: "Medium",
-        question: "What is the main purpose of normalization in a database?",
+        question: "What is the main purpose of database normalization?",
         options: [
-            "Increase data duplication",
-            "Reduce data redundancy",
-            "Delete all records",
-            "Increase table size"
+            "Increase redundancy",
+            "Reduce redundancy",
+            "Delete tables",
+            "Increase duplicate data"
         ],
-        answer: 1
+        answer: "Reduce redundancy"
     },
 
     {
         topic: "Database Systems",
         subtopic: "SQL Joins",
         difficulty: "Medium",
-        question: "Which JOIN returns only the matching records from both tables?",
+        question: "Which join returns only matching records from both tables?",
         options: ["LEFT JOIN", "RIGHT JOIN", "INNER JOIN", "FULL JOIN"],
-        answer: 2
+        answer: "INNER JOIN"
     },
 
     {
@@ -874,21 +785,21 @@ const questions = [
         difficulty: "Medium",
         question: "What is the main purpose of a foreign key?",
         options: [
-            "Create a unique record",
+            "Delete a database",
             "Connect related tables",
-            "Delete a table",
-            "Sort database records"
+            "Sort records",
+            "Create duplicate records"
         ],
-        answer: 1
+        answer: "Connect related tables"
     },
 
     {
         topic: "Database Systems",
         subtopic: "Transactions",
         difficulty: "Hard",
-        question: "Which ACID property ensures that a committed transaction remains saved even after a system failure?",
+        question: "Which ACID property ensures that a committed transaction survives a system failure?",
         options: ["Atomicity", "Consistency", "Isolation", "Durability"],
-        answer: 3
+        answer: "Durability"
     },
 
     {
@@ -897,7 +808,7 @@ const questions = [
         difficulty: "Hard",
         question: "Which normal form removes partial dependency?",
         options: ["1NF", "2NF", "3NF", "BCNF"],
-        answer: 1
+        answer: "2NF"
     }
 
 ];
@@ -906,204 +817,154 @@ const questions = [
 let quizQuestions = [];
 let currentQuestion = 0;
 let userAnswers = [];
-let quizResult = null;
+let currentTopic = "";
+let currentDifficulty = "";
+
+
+function shuffle(array) {
+    return [...array].sort(() => Math.random() - 0.5);
+}
 
 
 function showScreen(screen) {
-
     document.getElementById("setupScreen").classList.add("hidden");
     document.getElementById("quizScreen").classList.add("hidden");
     document.getElementById("analyticsScreen").classList.add("hidden");
     document.getElementById("dashboardScreen").classList.add("hidden");
 
-    if (screen === "setup") {
-        document.getElementById("setupScreen").classList.remove("hidden");
-    }
+    document.getElementById(screen).classList.remove("hidden");
+}
 
-    if (screen === "quiz") {
-        document.getElementById("quizScreen").classList.remove("hidden");
-    }
 
-    if (screen === "analytics") {
-        document.getElementById("analyticsScreen").classList.remove("hidden");
-    }
+function showSetup() {
+    showScreen("setupScreen");
+}
 
-    if (screen === "dashboard") {
-        document.getElementById("dashboardScreen").classList.remove("hidden");
-        updateDashboard();
-    }
+
+function showDashboard() {
+    updateDashboard();
+    showScreen("dashboardScreen");
 }
 
 
 function startQuiz() {
 
-    let topic = document.getElementById("topicSelect").value;
-    let difficulty = document.getElementById("difficultySelect").value;
-    let count = 10;
+    const topic = document.getElementById("topicSelect").value;
+    const difficulty = document.getElementById("difficultySelect").value;
+    const count = parseInt(document.getElementById("countSelect").value);
 
-    let filtered = questions.filter(function(q) {
+    currentTopic = topic;
+    currentDifficulty = difficulty;
 
-        let topicMatch =
-            topic === "All Topics" || q.topic === topic;
+    let filteredQuestions = questionBank.filter(q =>
+        (topic === "All Topics" || q.topic === topic) &&
+        q.difficulty === difficulty
+    );
 
-        let difficultyMatch =
-            q.difficulty === difficulty;
+    if (filteredQuestions.length < count) {
 
-        return topicMatch && difficultyMatch;
-    });
-
-
-    if (filtered.length < count) {
-
-        filtered = questions.filter(function(q) {
-
-            return topic === "All Topics" || q.topic === topic;
-
-        });
+        filteredQuestions = questionBank.filter(q =>
+            topic === "All Topics" || q.topic === topic
+        );
     }
 
+    quizQuestions = shuffle(filteredQuestions).slice(0, count);
 
-    filtered.sort(function() {
-        return Math.random() - 0.5;
-    });
-
-
-    if (filtered.length < count) {
-        count = filtered.length;
+    if (quizQuestions.length === 0) {
+        alert("No questions available.");
+        return;
     }
-
-
-    quizQuestions = filtered.slice(0, count);
-
-    userAnswers =
-        new Array(quizQuestions.length).fill(null);
 
     currentQuestion = 0;
+    userAnswers = new Array(quizQuestions.length).fill(null);
 
-    showScreen("quiz");
-
+    showScreen("quizScreen");
     renderQuestion();
-
-    renderPalette();
 }
 
 
 function renderQuestion() {
 
-    let q = quizQuestions[currentQuestion];
+    const question = quizQuestions[currentQuestion];
 
-    document.getElementById("questionNumber").textContent =
+    document.getElementById("questionTitle").textContent =
         "Question " + (currentQuestion + 1);
 
     document.getElementById("progressText").textContent =
         (currentQuestion + 1) + " / " + quizQuestions.length;
 
     document.getElementById("topicBadge").textContent =
-        q.topic;
+        question.topic;
 
     document.getElementById("subtopicBadge").textContent =
-        q.subtopic;
+        question.subtopic;
 
     document.getElementById("difficultyBadge").textContent =
-        q.difficulty;
+        question.difficulty;
 
     document.getElementById("questionText").textContent =
-        q.question;
+        question.question;
 
+    const container = document.getElementById("optionsContainer");
+    container.innerHTML = "";
 
-    let optionsBox =
-        document.getElementById("optionsContainer");
+    question.options.forEach((option, index) => {
 
-    optionsBox.innerHTML = "";
-
-
-    q.options.forEach(function(option, index) {
-
-        let button =
-            document.createElement("button");
+        const button = document.createElement("button");
 
         button.className =
-            "option w-full text-left p-4 rounded-lg border border-slate-600 bg-slate-900";
+            "option w-full text-left border border-slate-700 bg-slate-800 rounded-lg p-4 transition";
 
-        if (userAnswers[currentQuestion] === index) {
+        if (userAnswers[currentQuestion] === option) {
             button.classList.add("selected");
         }
 
-        button.textContent =
-            String.fromCharCode(65 + index) + ". " + option;
+        button.innerHTML = `
+            <div class="flex items-center gap-3">
+                <span class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-sm">
+                    ${String.fromCharCode(65 + index)}
+                </span>
+                <span>${option}</span>
+            </div>
+        `;
 
+        button.onclick = () => selectAnswer(option);
 
-        button.onclick = function() {
-
-            userAnswers[currentQuestion] = index;
-
-            renderQuestion();
-
-            renderPalette();
-        };
-
-
-        optionsBox.appendChild(button);
-
+        container.appendChild(button);
     });
-
-
-    let progress =
-        ((currentQuestion + 1) / quizQuestions.length) * 100;
-
-    document.getElementById("progressBar").style.width =
-        progress + "%";
 
 
     document.getElementById("previousBtn").disabled =
         currentQuestion === 0;
 
+    document.getElementById("previousBtn").classList.toggle(
+        "opacity-50",
+        currentQuestion === 0
+    );
+
 
     if (currentQuestion === quizQuestions.length - 1) {
 
-        document.getElementById("nextBtn").textContent =
-            "Submit Assessment";
-
-        document.getElementById("nextBtn").onclick =
-            openSubmitModal;
+        document.getElementById("nextBtn").classList.add("hidden");
+        document.getElementById("submitBtn").classList.remove("hidden");
 
     } else {
 
-        document.getElementById("nextBtn").textContent =
-            "Next";
-
-        document.getElementById("nextBtn").onclick =
-            nextQuestion;
+        document.getElementById("nextBtn").classList.remove("hidden");
+        document.getElementById("submitBtn").classList.add("hidden");
     }
 
 
+    renderPalette();
     updateCounts();
 }
 
 
-function nextQuestion() {
+function selectAnswer(answer) {
 
-    if (currentQuestion < quizQuestions.length - 1) {
+    userAnswers[currentQuestion] = answer;
 
-        currentQuestion++;
-
-        renderQuestion();
-
-        renderPalette();
-    }
-}
-
-
-function previousQuestion() {
-
-    if (currentQuestion > 0) {
-
-        currentQuestion--;
-
-        renderQuestion();
-
-        renderPalette();
-    }
+    renderQuestion();
 }
 
 
@@ -1112,75 +973,73 @@ function clearSelection() {
     userAnswers[currentQuestion] = null;
 
     renderQuestion();
+}
 
-    renderPalette();
+
+function nextQuestion() {
+
+    if (currentQuestion < quizQuestions.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+    }
+}
+
+
+function previousQuestion() {
+
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+    }
+}
+
+
+function goToQuestion(index) {
+
+    currentQuestion = index;
+    renderQuestion();
 }
 
 
 function renderPalette() {
 
-    let palette =
-        document.getElementById("questionPalette");
+    const palette = document.getElementById("questionPalette");
 
     palette.innerHTML = "";
 
+    quizQuestions.forEach((question, index) => {
 
-    quizQuestions.forEach(function(q, index) {
+        const button = document.createElement("button");
 
-        let button =
-            document.createElement("button");
-
-        button.textContent =
-            index + 1;
+        button.textContent = index + 1;
 
         button.className =
-            "w-10 h-10 rounded-lg bg-slate-700 hover:bg-slate-600";
-
+            "h-9 rounded-lg text-sm font-semibold bg-slate-700 hover:bg-slate-600";
 
         if (userAnswers[index] !== null) {
-
-            button.classList.add("bg-purple-600");
+            button.classList.remove("bg-slate-700");
+            button.classList.add("bg-green-600");
         }
-
 
         if (index === currentQuestion) {
-
-            button.classList.add(
-                "ring-2",
-                "ring-purple-400"
-            );
+            button.classList.add("ring-2", "ring-purple-500");
         }
 
-
-        button.onclick = function() {
-
-            currentQuestion = index;
-
-            renderQuestion();
-
-            renderPalette();
-        };
-
+        button.onclick = () => goToQuestion(index);
 
         palette.appendChild(button);
-
     });
-
-
-    updateCounts();
 }
 
 
 function updateCounts() {
 
-    let answered =
-        userAnswers.filter(function(a) {
-            return a !== null;
-        }).length;
+    const answered = userAnswers.filter(
+        answer => answer !== null
+    ).length;
 
-    let remaining =
-        userAnswers.length - answered;
-
+    const remaining =
+        quizQuestions.length - answered;
 
     document.getElementById("answeredCount").textContent =
         answered;
@@ -1194,262 +1053,195 @@ function updateCounts() {
 
 
 function openSubmitModal() {
-
-    document.getElementById("submitModal")
-        .classList.remove("hidden");
+    document.getElementById("submitModal").classList.remove("hidden");
 }
 
 
-function closeModal() {
-
-    document.getElementById("submitModal")
-        .classList.add("hidden");
+function closeSubmitModal() {
+    document.getElementById("submitModal").classList.add("hidden");
 }
 
 
 function submitQuizFinal() {
 
-    closeModal();
+    closeSubmitModal();
 
     let correct = 0;
 
+    const topicStats = {};
 
-    quizQuestions.forEach(function(q, index) {
+    quizQuestions.forEach((question, index) => {
 
-        if (userAnswers[index] === q.answer) {
-            correct++;
+        if (!topicStats[question.topic]) {
+            topicStats[question.topic] = {
+                total: 0,
+                correct: 0
+            };
         }
 
+        topicStats[question.topic].total++;
+
+        if (userAnswers[index] === question.answer) {
+            correct++;
+            topicStats[question.topic].correct++;
+        }
     });
 
 
-    let percentage =
-        Math.round(
-            (correct / quizQuestions.length) * 100
-        );
+    const total = quizQuestions.length;
 
+    const score = Math.round((correct / total) * 100);
 
-    quizResult = {
+    const result = {
+        date: new Date().toLocaleString(),
+        score: score,
         correct: correct,
-        total: quizQuestions.length,
-        percentage: percentage
+        total: total,
+        difficulty: currentDifficulty,
+        topic: currentTopic,
+        topicStats: topicStats
     };
 
 
-    saveResult(percentage);
+    const oldResults =
+        JSON.parse(localStorage.getItem("learnai_profile") || "[]");
 
-    renderAnalytics();
-
-    showScreen("analytics");
-}
-
-
-function saveResult(score) {
-
-    let data =
-        JSON.parse(
-            localStorage.getItem("learnai_profile")
-        ) || {
-            completed: 0,
-            scores: [],
-            easy: [],
-            medium: [],
-            hard: []
-        };
-
-
-    data.completed++;
-
-    data.scores.push(score);
-
-
-    let difficulty =
-        document.getElementById("difficultySelect").value;
-
-
-    if (difficulty === "Easy") {
-        data.easy.push(score);
-    }
-
-    if (difficulty === "Medium") {
-        data.medium.push(score);
-    }
-
-    if (difficulty === "Hard") {
-        data.hard.push(score);
-    }
-
+    oldResults.push(result);
 
     localStorage.setItem(
         "learnai_profile",
-        JSON.stringify(data)
+        JSON.stringify(oldResults)
     );
+
+
+    renderAnalytics(result);
+    showScreen("analyticsScreen");
 }
 
 
-function average(arr) {
+function renderAnalytics(result) {
 
-    if (arr.length === 0) {
-        return 0;
-    }
+    document.getElementById("scoreDisplay").textContent =
+        result.score + "%";
 
+    document.getElementById("correctDisplay").textContent =
+        result.correct;
 
-    let total =
-        arr.reduce(function(a, b) {
-            return a + b;
-        }, 0);
+    document.getElementById("totalDisplay").textContent =
+        result.total;
 
+    document.getElementById("analyticsScoreText").textContent =
+        result.score + "%";
 
-    return Math.round(total / arr.length);
-}
+    document.getElementById("analyticsProgress").style.width =
+        result.score + "%";
 
-
-function renderAnalytics() {
-
-    let score =
-        quizResult.percentage;
-
-
-    document.getElementById("finalScore").textContent =
-        score + "%";
-
-
-    document.getElementById("correctAnswers").textContent =
-        quizResult.correct;
-
-
-    document.getElementById("totalQuestions").textContent =
-        quizResult.total;
-
-
-    document.getElementById("scoreProgress").style.width =
-        score + "%";
-
+    const accuracy =
+        Math.round((result.correct / result.total) * 100);
 
     document.getElementById("accuracyText").textContent =
-        score + "%";
+        accuracy + "%";
 
 
-    let table =
-        document.getElementById("performanceTable");
+    const tbody =
+        document.getElementById("topicPerformance");
 
-    table.innerHTML = "";
+    tbody.innerHTML = "";
 
+    Object.keys(result.topicStats).forEach(topic => {
 
-    let topicData = {};
+        const stats = result.topicStats[topic];
 
+        const topicAccuracy =
+            Math.round((stats.correct / stats.total) * 100);
 
-    quizQuestions.forEach(function(q, index) {
+        const row = document.createElement("tr");
 
-        if (!topicData[q.topic]) {
-
-            topicData[q.topic] = {
-                total: 0,
-                correct: 0,
-                difficulties: []
-            };
-
-        }
-
-
-        topicData[q.topic].total++;
-
-        topicData[q.topic].difficulties.push(
-            q.difficulty
-        );
-
-
-        if (userAnswers[index] === q.answer) {
-            topicData[q.topic].correct++;
-        }
-
-    });
-
-
-    Object.keys(topicData).forEach(function(topic) {
-
-        let data =
-            topicData[topic];
-
-
-        let accuracy =
-            Math.round(
-                (data.correct / data.total) * 100
-            );
-
-
-        let status =
-            accuracy >= 70
-                ? "Good"
-                : "Needs Practice";
-
-
-        let row =
-            document.createElement("tr");
-
-
-        row.className =
-            "border-b border-slate-700";
-
+        row.className = "border-b border-slate-800";
 
         row.innerHTML = `
-            <td class="p-3">${topic}</td>
-            <td class="p-3">${data.correct}/${data.total}</td>
-            <td class="p-3">${accuracy}%</td>
-            <td class="p-3">${data.difficulties.join(", ")}</td>
-            <td class="p-3">${status}</td>
+            <td class="py-4">${topic}</td>
+            <td class="py-4">${stats.total}</td>
+            <td class="py-4">${stats.correct}</td>
+            <td class="py-4">${topicAccuracy}%</td>
         `;
 
-
-        table.appendChild(row);
-
+        tbody.appendChild(row);
     });
-
 }
 
 
 function updateDashboard() {
 
-    let data =
-        JSON.parse(
-            localStorage.getItem("learnai_profile")
-        ) || {
-            completed: 0,
-            scores: [],
-            easy: [],
-            medium: [],
-            hard: []
-        };
-
+    const results =
+        JSON.parse(localStorage.getItem("learnai_profile") || "[]");
 
     document.getElementById("quizCompleted").textContent =
-        data.completed;
+        results.length;
+
+    if (results.length === 0) {
+
+        document.getElementById("averageAccuracy").textContent = "0%";
+        document.getElementById("bestPerformance").textContent = "0%";
+        document.getElementById("easyScore").textContent = "0%";
+        document.getElementById("mediumScore").textContent = "0%";
+        document.getElementById("hardScore").textContent = "0%";
+
+        return;
+    }
+
+
+    const average =
+        Math.round(
+            results.reduce((sum, result) => sum + result.score, 0) /
+            results.length
+        );
+
+    const best =
+        Math.max(...results.map(result => result.score));
 
 
     document.getElementById("averageAccuracy").textContent =
-        average(data.scores) + "%";
-
+        average + "%";
 
     document.getElementById("bestPerformance").textContent =
-        data.scores.length
-            ? Math.max(...data.scores) + "%"
-            : "0%";
+        best + "%";
 
 
-    document.getElementById("easyScore").textContent =
-        average(data.easy) + "%";
+    const difficultyScores = {
+        Easy: [],
+        Medium: [],
+        Hard: []
+    };
 
 
-    document.getElementById("mediumScore").textContent =
-        average(data.medium) + "%";
+    results.forEach(result => {
+
+        if (difficultyScores[result.difficulty]) {
+            difficultyScores[result.difficulty].push(result.score);
+        }
+    });
 
 
-    document.getElementById("hardScore").textContent =
-        average(data.hard) + "%";
+    Object.keys(difficultyScores).forEach(level => {
+
+        const scores = difficultyScores[level];
+
+        const averageScore = scores.length
+            ? Math.round(
+                scores.reduce((a, b) => a + b, 0) /
+                scores.length
+            )
+            : 0;
+
+        document.getElementById(
+            level.toLowerCase() + "Score"
+        ).textContent = averageScore + "%";
+    });
 }
 
 
-showScreen("setup");
+showSetup();
 
 </script>
 

@@ -1,1505 +1,874 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LearnAI - Adaptive Student Learning</title>
+    <title>LearnAI Quiz Engine</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .option:hover {
+            background-color: #334155;
+        }
+
+        .selected {
+            border-color: #8b5cf6;
+            background-color: #312e81;
+        }
+    </style>
 </head>
 
-<body class="bg-[#eef1f7] text-gray-800 font-sans">
+<body class="bg-slate-900 text-white min-h-screen">
 
-<section id="app" class="min-h-screen">
-
-    <aside class="fixed left-0 top-0 bottom-0 w-[245px] bg-gradient-to-r from-gray-600 to-cyan-900 text-white p-5 z-40">
-
-        <div class="text-center mb-10">
-            <h1 class="text-2xl font-extrabold">LearnAI</h1>
-            <p class="text-xs text-gray-300 mt-1">Adaptive Learning</p>
-        </div>
-
-        <nav class="space-y-2">
-
-            <button
-                data-page="dashboard"
-                onclick="showPage('dashboard', this)"
-                class="nav-btn w-full text-left px-4 py-3 rounded-xl bg-[#2b2f4a] text-white transition">
-                🏠 Dashboard
-            </button>
-
-            <button
-                data-page="topics"
-                onclick="showPage('topics', this)"
-                class="nav-btn w-full text-left px-4 py-3 rounded-xl text-gray-300 hover:bg-[#2b2f4a] transition">
-                📚 Topics
-            </button>
-
-            <button
-                data-page="profile"
-                onclick="showPage('profile', this)"
-                class="nav-btn w-full text-left px-4 py-3 rounded-xl text-gray-300 hover:bg-[#2b2f4a] transition">
-                👤 Profile
-            </button>
-
-        </nav>
-
-    </aside>
-
-
-    <main class="ml-[245px] p-6">
-
-        <header class="bg-white rounded-2xl px-6 py-4 mb-6 shadow-sm flex items-center justify-between">
-
+    <header class="bg-slate-800 border-b border-slate-700">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
             <div>
-                <h2 id="pageTitle" class="text-2xl font-bold">
-                    Dashboard
-                </h2>
+                <h1 class="text-2xl font-bold">LearnAI Quiz Engine</h1>
+                <p class="text-sm text-slate-400">Adaptive Student Learning</p>
+            </div>
 
-                <p class="text-sm text-gray-500">
-                    Continue your learning journey
+            <button onclick="showScreen('dashboard')"
+                class="bg-red-700 px-4 py-2 rounded-lg hover:bg-slate-600">
+                Dashboard
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 py-8">
+
+        <section id="setupScreen">
+
+            <div class="mb-8">
+                <p class="text-purple-400 text-sm font-semibold">ASSESSMENT PORTAL</p>
+                <h2 class="text-3xl font-bold mt-2">Assessment Configuration</h2>
+                <p class="text-slate-400 mt-2">
+                    Select your topic and difficulty level to start the quiz.
                 </p>
             </div>
 
+            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
 
-            <div class="flex items-center gap-3">
+                <div class="grid md:grid-cols-3 gap-5">
 
-                <div id="topUserName"
-                    class="font-semibold hidden sm:block">
-                    Student
-                </div>
+                    <div>
+                        <label class="block mb-2 text-sm text-slate-300">
+                            Subject Topic
+                        </label>
 
-                <div id="avatar"
-                    class="w-11 h-11 rounded-full bg-gradient-to-br from-[#6c63ff] to-[#9b8cff] text-white flex items-center justify-center font-bold">
-                    S
-                </div>
-
-            </div>
-
-        </header>
-
-
-        <section id="dashboard" class="block">
-
-            <div class="mb-6">
-
-                <h1 class="text-3xl font-bold">
-                    Hello,
-                    <span id="dashboardName">Student</span>
-                    👋
-                </h1>
-
-                <p class="text-gray-500 mt-1">
-                    Here's your learning overview.
-                </p>
-
-            </div>
-
-
-            <div class="grid md:grid-cols-3 gap-5 mb-4">
-
-                <div class="bg-white p-6 rounded-2xl shadow-sm">
-
-                    <div class="text-4xl mb-3">
-                        🔥
+                        <select id="topicSelect"
+                            class="w-full bg-slate-900 border border-slate-600 rounded-lg p-3">
+                            <option value="All Topics">All Topics</option>
+                            <option value="Data Structures">Data Structures</option>
+                            <option value="Web Development">Web Development</option>
+                            <option value="Database Systems">Database Systems</option>
+                        </select>
                     </div>
 
-                    <p class="text-gray-500">
-                        Current Streak
-                    </p>
+                    <div>
+                        <label class="block mb-2 text-sm text-slate-300">
+                            Difficulty
+                        </label>
 
-                    <h2 id="streakValue"
-                        class="text-3xl font-bold mt-1">
-                        0
-                    </h2>
-
-                </div>
-
-
-                <div class="bg-white p-6 rounded-2xl shadow-sm">
-
-                    <div class="text-4xl mb-3">
-                        📝
+                        <select id="difficultySelect"
+                            class="w-full bg-slate-900 border border-slate-600 rounded-lg p-3">
+                            <option value="Easy">Easy</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Hard">Hard</option>
+                        </select>
                     </div>
 
-                    <p class="text-gray-500">
-                        Quizzes Completed
-                    </p>
+                    <div>
+                        <label class="block mb-2 text-sm text-slate-300">
+                            Question Count
+                        </label>
 
-                    <h2 id="quizCount"
-                        class="text-3xl font-bold mt-1">
-                        0
-                    </h2>
-
-                </div>
-
-
-                <div class="bg-white p-6 rounded-2xl shadow-sm">
-
-                    <div class="text-4xl mb-3">
-                        📊
-                    </div>
-
-                    <p class="text-gray-500">
-                        Average Score
-                    </p>
-
-                    <h2 id="averageScore"
-                        class="text-3xl font-bold mt-1">
-                        0%
-                    </h2>
-
-                </div>
-
-            </div>
-
-
-            <div class="grid md:grid-cols-3 gap-5 mb-6">
-
-                <div class="bg-white p-6 rounded-2xl shadow-sm">
-
-                    <div class="flex justify-between mb-3">
-
-                        <h3 class="font-bold">
-                            Javascript
-                        </h3>
-
-                        <span id="easyProgressText">
-                            0%
-                        </span>
-
-                    </div>
-
-                    <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
-
-                        <div id="easyProgress"
-                            class="h-full bg-gradient-to-r from-[#6c63ff] to-[#9b8cff]"
-                            style="width:0%">
-                        </div>
-
+                        <select id="countSelect"
+                            class="w-full bg-slate-900 border border-slate-600 rounded-lg p-3">
+                            <option value="5">5 Questions</option>
+                            <option value="10">10 Questions</option>
+                        </select>
                     </div>
 
                 </div>
 
-
-                <div class="bg-white p-6 rounded-2xl shadow-sm">
-
-                    <div class="flex justify-between mb-3">
-
-                        <h3 class="font-bold">
-                            Python
-                        </h3>
-
-                        <span id="mediumProgressText">
-                            0%
-                        </span>
-
-                    </div>
-
-                    <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
-
-                        <div id="mediumProgress"
-                            class="h-full bg-gradient-to-r from-yellow-500 to-red-300"
-                            style="width:0%">
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="bg-white p-6 rounded-2xl shadow-sm">
-
-                    <div class="flex justify-between mb-3">
-
-                        <h3 class="font-bold">
-                            Data Structure
-                        </h3>
-
-                        <span id="hardProgressText">
-                            0%
-                        </span>
-
-                    </div>
-
-                    <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
-
-                        <div id="hardProgress"
-                            class="h-full bg-gradient-to-r from-yellow-800 to-red-300"
-                            style="width:0%">
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="bg-gradient-to-r from-red-600 to-yellow-200 text-white p-7 rounded-2xl mb-6">
-
-                <h2 class="text-2xl font-bold mb-2">
-                    💡 Recommended For You
-                </h2>
-
-                <p id="recommendation"
-                    class="opacity-90 mb-5">
-                    Start with an Easy quiz to build your confidence.
-                </p>
-
-                <button
-                    onclick="showPage('topics')"
-                    class="bg-white text-gray-700 px-5 py-3 rounded-xl font-bold hover:shadow-lg transition">
-                    Start Learning →
+                <button onclick="startQuiz()"
+                    class="mt-6 bg-purple-600 hover:bg-purple-700 px-6 py-3 rounded-lg font-semibold">
+                    Start Assessment
                 </button>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-5 mt-8">
+
+                <div class="bg-slate-800 p-5 rounded-xl border border-slate-700">
+                    <h3 class="font-bold text-lg">Data Structures</h3>
+                    <p class="text-slate-400 text-sm mt-2">
+                        Practice trees, hashing and algorithms.
+                    </p>
+                </div>
+
+                <div class="bg-slate-800 p-5 rounded-xl border border-slate-700">
+                    <h3 class="font-bold text-lg">Web Development</h3>
+                    <p class="text-slate-400 text-sm mt-2">
+                        Test your knowledge of web technologies.
+                    </p>
+                </div>
+
+                <div class="bg-slate-800 p-5 rounded-xl border border-slate-700">
+                    <h3 class="font-bold text-lg">Database Systems</h3>
+                    <p class="text-slate-400 text-sm mt-2">
+                        Check your database fundamentals.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="quizScreen" class="hidden">
+
+            <div class="flex justify-between items-center mb-5">
+                <div>
+                    <p class="text-sm text-slate-400">Question</p>
+                    <h2 id="questionNumber" class="text-2xl font-bold"></h2>
+                </div>
+
+                <div id="progressText" class="text-purple-400 font-semibold"></div>
+            </div>
+
+            <div class="w-full bg-slate-700 rounded-full h-2 mb-8">
+                <div id="progressBar"
+                    class="bg-purple-600 h-2 rounded-full"
+                    style="width: 0%">
+                </div>
+            </div>
+
+            <div class="bg-slate-800 rounded-xl border border-slate-700 p-6">
+
+                <div class="flex flex-wrap gap-2 mb-5">
+                    <span id="topicBadge"
+                        class="bg-purple-900 text-purple-300 px-3 py-1 rounded-full text-sm">
+                    </span>
+
+                    <span id="subtopicBadge"
+                        class="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm">
+                    </span>
+
+                    <span id="difficultyBadge"
+                        class="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm">
+                    </span>
+                </div>
+
+                <h3 id="questionText"
+                    class="text-xl font-semibold mb-6">
+                </h3>
+
+                <div id="optionsContainer" class="space-y-3"></div>
+
+                <button onclick="clearSelection()"
+                    class="mt-5 text-sm text-slate-400 hover:text-white">
+                    Clear Selection
+                </button>
+
+                <div class="flex justify-between mt-8">
+
+                    <button onclick="previousQuestion()"
+                        id="previousBtn"
+                        class="px-5 py-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+                        Previous
+                    </button>
+
+                    <button onclick="nextQuestion()"
+                        id="nextBtn"
+                        class="px-5 py-2 rounded-lg bg-purple-600 hover:bg-purple-700">
+                        Next
+                    </button>
+
+                </div>
+            </div>
+
+            <div class="mt-8 bg-slate-800 p-5 rounded-xl border border-slate-700">
+
+                <h3 class="font-bold mb-4">Question Palette</h3>
+
+                <div id="questionPalette"
+                    class="flex flex-wrap gap-2">
+                </div>
+
+                <div class="flex gap-6 mt-5 text-sm text-slate-400">
+                    <span>Answered: <b id="answeredCount">0</b></span>
+                    <span>Skipped: <b id="skippedCount">0</b></span>
+                    <span>Remaining: <b id="remainingCount">0</b></span>
+                </div>
 
             </div>
 
         </section>
 
+        <section id="analyticsScreen" class="hidden">
 
-        <section id="topics" class="hidden">
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <p class="text-purple-400 text-sm font-semibold">
+                        DIAGNOSTIC REPORT
+                    </p>
 
-            <div class="mb-6">
+                    <h2 class="text-3xl font-bold mt-1">
+                        Assessment Report
+                    </h2>
+                </div>
 
-                <h1 class="text-3xl font-bold">
-                    Choose Your Quiz
-                </h1>
+                <button onclick="showScreen('setup')"
+                    class="bg-purple-600 hover:bg-purple-700 px-5 py-2 rounded-lg">
+                    Take New Assessment
+                </button>
+            </div>
 
-                <p class="text-gray-500">
-                    Select a difficulty level.
-                </p>
+            <div class="grid md:grid-cols-3 gap-5 mb-8">
+
+                <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                    <p class="text-slate-400">Score</p>
+                    <h3 id="finalScore"
+                        class="text-3xl font-bold mt-2">
+                        0%
+                    </h3>
+                </div>
+
+                <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                    <p class="text-slate-400">Correct Answers</p>
+                    <h3 id="correctAnswers"
+                        class="text-3xl font-bold mt-2">
+                        0
+                    </h3>
+                </div>
+
+                <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                    <p class="text-slate-400">Total Questions</p>
+                    <h3 id="totalQuestions"
+                        class="text-3xl font-bold mt-2">
+                        0
+                    </h3>
+                </div>
 
             </div>
 
+            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 mb-8">
+
+                <h3 class="text-xl font-bold mb-5">
+                    Overall Performance
+                </h3>
+
+                <div class="grid md:grid-cols-2 gap-5">
+
+                    <div>
+                        <p class="text-slate-400 text-sm">Overall Score</p>
+
+                        <div class="w-full bg-slate-700 rounded-full h-3 mt-2">
+                            <div id="scoreProgress"
+                                class="bg-purple-600 h-3 rounded-full"
+                                style="width:0%">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="text-slate-400 text-sm">Accuracy</p>
+
+                        <p id="accuracyText"
+                            class="text-2xl font-bold mt-2">
+                            0%
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+
+                <h3 class="text-xl font-bold mb-5">
+                    Topic Performance
+                </h3>
+
+                <div class="overflow-x-auto">
+
+                    <table class="w-full text-left">
+
+                        <thead class="border-b border-slate-700">
+                            <tr>
+                                <th class="p-3">Topic</th>
+                                <th class="p-3">Correct</th>
+                                <th class="p-3">Accuracy</th>
+                                <th class="p-3">Difficulty</th>
+                                <th class="p-3">Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="performanceTable"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section id="dashboardScreen" class="hidden">
+
+            <div class="mb-8">
+                <p class="text-purple-400 text-sm font-semibold">
+                    LEARNAI
+                </p>
+
+                <h2 class="text-3xl font-bold mt-1">
+                    Student Dashboard
+                </h2>
+            </div>
 
             <div class="grid md:grid-cols-3 gap-5">
 
-                <div class="bg-white p-7 rounded-2xl shadow-sm hover:-translate-y-1 hover:shadow-xl transition">
+                <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                    <p class="text-slate-400">Quizzes Completed</p>
 
-                    <div class="text-5xl mb-5">
-                        🌱
-                    </div>
-
-                    <h2 class="text-2xl font-bold mb-2">
-                        Easy
-                    </h2>
-
-                    <p class="text-gray-500 mb-6">
-                        Beginner-friendly questions.
-                    </p>
-
-                    <button
-                        onclick="startQuiz('easy')"
-                        class="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-blue-300 text-white font-bold">
-                        Start Easy Quiz
-                    </button>
-
+                    <h3 id="quizCompleted"
+                        class="text-3xl font-bold mt-2">
+                        0
+                    </h3>
                 </div>
 
+                <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                    <p class="text-slate-400">Average Accuracy</p>
 
-                <div class="bg-white p-7 rounded-2xl shadow-sm hover:-translate-y-1 hover:shadow-xl transition">
-
-                    <div class="text-5xl mb-5">
-                        🚀
-                    </div>
-
-                    <h2 class="text-2xl font-bold mb-2">
-                        Medium
-                    </h2>
-
-                    <p class="text-gray-500 mb-6">
-                        Test your understanding.
-                    </p>
-
-                    <button
-                        onclick="startQuiz('medium')"
-                        class="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-blue-300 text-white font-bold">
-                        Start Medium Quiz
-                    </button>
-
+                    <h3 id="averageAccuracy"
+                        class="text-3xl font-bold mt-2">
+                        0%
+                    </h3>
                 </div>
 
+                <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                    <p class="text-slate-400">Best Performance</p>
 
-                <div class="bg-white p-7 rounded-2xl shadow-sm hover:-translate-y-1 hover:shadow-xl transition">
-
-                    <div class="text-5xl mb-5">
-                        🔥
-                    </div>
-
-                    <h2 class="text-2xl font-bold mb-2">
-                        Hard
-                    </h2>
-
-                    <p class="text-gray-500 mb-6">
-                        Challenge your knowledge.
-                    </p>
-
-                    <button
-                        onclick="startQuiz('hard')"
-                        class="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-blue-300 text-white font-bold">
-                        Start Hard Quiz
-                    </button>
-
+                    <h3 id="bestPerformance"
+                        class="text-3xl font-bold mt-2">
+                        0%
+                    </h3>
                 </div>
 
             </div>
 
+            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 mt-8">
 
-            <div id="quizArea"
-                class="mt-8">
-            </div>
+                <h3 class="text-xl font-bold mb-5">
+                    Difficulty Based Scores
+                </h3>
 
-        </section>
+                <div class="grid md:grid-cols-3 gap-5">
 
+                    <div class="bg-slate-900 p-5 rounded-lg">
+                        <p class="text-slate-400">Easy</p>
 
-        <section id="profile" class="hidden">
-
-            <div class="max-w-3xl mx-auto">
-
-                <div class="bg-white p-7 rounded-2xl shadow-sm">
-
-                    <div class="text-center mb-8">
-
-                        <div id="profileAvatar"
-                            class="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-[#6c63ff] to-[#9b8cff] text-white flex items-center justify-center text-3xl font-bold">
-                            S
-                        </div>
-
-                        <h2 id="profileDisplayName"
-                            class="text-2xl font-bold mt-4">
-                            Student
-                        </h2>
-
-                        <p class="text-gray-500">
-                            LearnAI Student
+                        <p id="easyScore"
+                            class="text-2xl font-bold mt-2">
+                            0%
                         </p>
-
                     </div>
 
+                    <div class="bg-slate-900 p-5 rounded-lg">
+                        <p class="text-slate-400">Medium</p>
 
-                    <div class="grid md:grid-cols-2 gap-4">
-
-                        <div>
-
-                            <label class="text-sm text-gray-500">
-                                Name
-                            </label>
-
-                            <input
-                                id="profileName"
-                                class="w-full p-3 mt-1 border rounded-xl">
-
-                        </div>
-
-
-                        <div>
-
-                            <label class="text-sm text-gray-500">
-                                Email
-                            </label>
-
-                            <input
-                                id="profileEmail"
-                                disabled
-                                class="w-full p-3 mt-1 border rounded-xl bg-gray-100">
-
-                        </div>
-
-
-                        <div>
-
-                            <label class="text-sm text-gray-500">
-                                College
-                            </label>
-
-                            <input
-                                id="profileCollege"
-                                class="w-full p-3 mt-1 border rounded-xl">
-
-                        </div>
-
-
-                        <div>
-
-                            <label class="text-sm text-gray-500">
-                                Course
-                            </label>
-
-                            <input
-                                id="profileCourse"
-                                class="w-full p-3 mt-1 border rounded-xl">
-
-                        </div>
-
-
-                        <div>
-
-                            <label class="text-sm text-gray-500">
-                                Year
-                            </label>
-
-                            <input
-                                id="profileYear"
-                                class="w-full p-3 mt-1 border rounded-xl">
-
-                        </div>
-
-
-                        <div>
-
-                            <label class="text-sm text-gray-500">
-                                Language
-                            </label>
-
-                            <select
-                                id="profileLanguage"
-                                class="w-full p-3 mt-1 border rounded-xl">
-
-                                <option>
-                                    English
-                                </option>
-
-                                <option>
-                                    Hindi
-                                </option>
-
-                                <option>
-                                    Marathi
-                                </option>
-
-                            </select>
-
-                        </div>
-
+                        <p id="mediumScore"
+                            class="text-2xl font-bold mt-2">
+                            0%
+                        </p>
                     </div>
 
+                    <div class="bg-slate-900 p-5 rounded-lg">
+                        <p class="text-slate-400">Hard</p>
 
-                    <button
-                        onclick="saveProfile()"
-                        class="w-full mt-6 py-3.5 rounded-xl bg-gradient-to-r from-[#6c63ff] to-[#8e7dff] text-white font-bold">
-                        Save Profile
-                    </button>
+                        <p id="hardScore"
+                            class="text-2xl font-bold mt-2">
+                            0%
+                        </p>
+                    </div>
 
                 </div>
 
             </div>
+
+            <button onclick="showScreen('setup')"
+                class="mt-8 bg-purple-600 hover:bg-purple-700 px-6 py-3 rounded-lg font-semibold">
+                Start New Quiz
+            </button>
 
         </section>
 
     </main>
 
-</section>
+    <div id="submitModal"
+        class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center px-5">
 
+        <div class="bg-slate-800 rounded-xl p-6 max-w-md w-full border border-slate-700">
 
-<div id="toast"
-    class="hidden fixed right-6 bottom-6 z-[100] px-5 py-3.5 rounded-xl bg-[#171a2c] text-white shadow-xl">
-</div>
+            <h3 class="text-xl font-bold">
+                Submit Assessment?
+            </h3>
 
+            <p class="text-slate-400 mt-3">
+                Are you sure you want to submit your assessment?
+            </p>
 
-<script>
+            <div class="flex justify-end gap-3 mt-6">
 
-const quizData = {
-
-    easy: [
-
-        ["What does CPU stand for?",
-        ["Central Processing Unit","Computer Personal Unit","Central Program Utility","Control Processing User"],0],
-
-        ["Which language is used to structure web pages?",
-        ["HTML","CSS","Python","SQL"],0],
-
-        ["Which device is used to input text?",
-        ["Keyboard","Monitor","Speaker","Printer"],0],
-
-        ["What does RAM stand for?",
-        ["Random Access Memory","Read Access Memory","Rapid Action Memory","Run Access Module"],0],
-
-        ["Which one is an operating system?",
-        ["Windows","Google","HTML","Intel"],0],
-
-        ["Which symbol is used for comments in C++?",
-        ["//","#","<!--","**"],0],
-
-        ["Which data type stores whole numbers in C++?",
-        ["int","float","char","string"],0],
-
-        ["Which keyword is used to create a class in C++?",
-        ["class","object","structs","define"],0],
-
-        ["Which company developed Android?",
-        ["Google","Microsoft","Apple","IBM"],0],
-
-        ["What is 5 + 5?",
-        ["10","15","20","25"],0],
-
-        ["Which is a programming language?",
-        ["Python","Chrome","Windows","Google"],0],
-
-        ["What does URL stand for?",
-        ["Uniform Resource Locator","Universal Read Link","User Resource Language","Uniform Router Link"],0],
-
-        ["Which device displays output?",
-        ["Monitor","Keyboard","Mouse","Scanner"],0],
-
-        ["What does AI stand for?",
-        ["Artificial Intelligence","Automated Internet","Advanced Input","Artificial Internet"],0],
-
-        ["Which one is a database?",
-        ["MySQL","HTML","CSS","Chrome"],0],
-
-        ["Which loop repeats while a condition is true?",
-        ["while","if","switch","class"],0],
-
-        ["Which operator means AND in C++?",
-        ["&&","||","!","=="],0],
-
-        ["Which operator means OR in C++?",
-        ["||","&&","!","!="],0],
-
-        ["Which keyword returns a value from a function?",
-        ["return","send","output","give"],0],
-
-        ["Which file extension is commonly used for C++?",
-        [".cpp",".html",".css",".py"],0]
-
-    ],
-
-
-    medium: [
-
-        ["What is the time complexity of binary search?",
-        ["O(log n)","O(n)","O(n²)","O(1)"],0],
-
-        ["Which data structure follows LIFO?",
-        ["Stack","Queue","Array","Graph"],0],
-
-        ["Which data structure follows FIFO?",
-        ["Queue","Stack","Tree","Heap"],0],
-
-        ["Which algorithm is commonly used for sorting?",
-        ["Merge Sort","Binary Search","DFS","BFS"],0],
-
-        ["What is inheritance in OOP?",
-        ["Acquiring properties of another class","Deleting a class","Creating variables","Sorting objects"],0],
-
-        ["Which keyword prevents inheritance in some languages?",
-        ["final","stop","private","static"],0],
-
-        ["What is polymorphism?",
-        ["One interface, multiple forms","Only one object","Memory allocation","Data deletion"],0],
-
-        ["Which structure stores key-value pairs?",
-        ["Map","Stack","Queue","Array"],0],
-
-        ["Which traversal uses a queue?",
-        ["BFS","DFS","Binary Search","Merge Sort"],0],
-
-        ["Which traversal commonly uses a stack?",
-        ["DFS","BFS","Binary Search","Bubble Sort"],0],
-
-        ["What is the worst-case complexity of bubble sort?",
-        ["O(n²)","O(log n)","O(n)","O(1)"],0],
-
-        ["Which sorting algorithm uses divide and conquer?",
-        ["Merge Sort","Bubble Sort","Linear Search","Selection"],0],
-
-        ["What is recursion?",
-        ["A function calling itself","A loop only","A variable","A class"],0],
-
-        ["Which memory is volatile?",
-        ["RAM","ROM","SSD","Hard Disk"],0],
-
-        ["Which protocol is used for secure web browsing?",
-        ["HTTPS","HTTP","FTP","SMTP"],0],
-
-        ["What does API stand for?",
-        ["Application Programming Interface","Application Program Internet","Advanced Programming Input","Automated Program Interface"],0],
-
-        ["What does SQL primarily work with?",
-        ["Databases","Images","Audio","Networks"],0],
-
-        ["Which command retrieves data in SQL?",
-        ["SELECT","GET","READ","FETCH"],0],
-
-        ["Which keyword creates an object dynamically in C++?",
-        ["new","create","object","malloc"],0],
-
-        ["What is encapsulation?",
-        ["Bundling data and methods","Sorting data","Deleting data","Copying files"],0]
-
-    ],
-
-
-    hard: [
-
-        ["What is the average complexity of hash table lookup?",
-        ["O(1)","O(n)","O(log n)","O(n²)"],0],
-
-        ["Which algorithm finds shortest paths with non-negative weights?",
-        ["Dijkstra","DFS","Bubble Sort","Kruskal"],0],
-
-        ["Which algorithm is used for minimum spanning tree?",
-        ["Kruskal","Binary Search","DFS","Merge Sort"],0],
-
-        ["What is the complexity of merge sort?",
-        ["O(n log n)","O(n²)","O(log n)","O(n)"],0],
-
-        ["Which data structure is commonly used in Dijkstra's optimized implementation?",
-        ["Priority Queue","Stack","Queue","Array"],0],
-
-        ["What is dynamic programming?",
-        ["Solving overlapping subproblems using stored results","Only recursion","Sorting arrays","Network routing"],0],
-
-        ["What does memoization mean?",
-        ["Caching computed results","Deleting memory","Sorting data","Creating objects"],0],
-
-        ["Which algorithm is used to find strongly connected components?",
-        ["Kosaraju","Binary Search","Bubble Sort","Dijkstra"],0],
-
-        ["Which data structure supports efficient minimum extraction?",
-        ["Min Heap","Stack","Queue","Linked List"],0],
-
-        ["What is the complexity of accessing an array element by index?",
-        ["O(1)","O(n)","O(log n)","O(n²)"],0],
-
-        ["Which traversal of a BST gives sorted order?",
-        ["Inorder","Preorder","Postorder","Level order"],0],
-
-        ["What is the height of a balanced binary tree approximately?",
-        ["O(log n)","O(n)","O(n²)","O(1)"],0],
-
-        ["Which technique is used by quicksort?",
-        ["Partitioning","Hashing","BFS","Memoization"],0],
-
-        ["Average complexity of quicksort?",
-        ["O(n log n)","O(n²)","O(log n)","O(n)"],0],
-
-        ["What is a deadlock?",
-        ["Processes waiting indefinitely for resources","Program compilation","Memory sorting","Network transfer"],0],
-
-        ["Which condition is necessary for deadlock?",
-        ["Circular wait","Sorting","Recursion","Inheritance"],0],
-
-        ["What is virtual memory?",
-        ["Using disk space as an extension of memory","CPU cache","ROM","Register"],0],
-
-        ["What is normalization mainly used for in databases?",
-        ["Reducing redundancy","Increasing duplication","Encrypting data","Sorting rows"],0],
-
-        ["What is indexing in databases used for?",
-        ["Faster data retrieval","Deleting tables","Encrypting passwords","Creating users"],0],
-
-        ["What is machine learning?",
-        ["Learning patterns from data","Writing HTML","Managing files","Drawing graphics"],0]
-
-    ]
-
-};
-
-
-let currentUser =
-    JSON.parse(localStorage.getItem("learnAIUser")) || {
-
-        name: "Student",
-        email: "student@example.com",
-        college: "",
-        course: "",
-        year: "",
-        language: "English"
-
-    };
-
-
-let state =
-    JSON.parse(localStorage.getItem("learnAIState")) || {
-
-        streak: 0,
-        lastStudy: null,
-        quizzes: []
-
-    };
-
-
-let currentQuiz = [];
-let currentDifficulty = "";
-let currentQuestion = 0;
-let currentAnswers = [];
-
-
-function saveState() {
-
-    localStorage.setItem(
-        "learnAIState",
-        JSON.stringify(state)
-    );
-
-}
-
-
-function escapeHTML(text) {
-
-    return String(text)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-}
-
-
-function showToast(message) {
-
-    const toast =
-        document.getElementById("toast");
-
-    toast.textContent = message;
-
-    toast.classList.remove("hidden");
-
-    setTimeout(() => {
-
-        toast.classList.add("hidden");
-
-    }, 2500);
-
-}
-
-
-function showPage(id, button = null) {
-
-    const pages = [
-        "dashboard",
-        "topics",
-        "profile"
-    ];
-
-
-    pages.forEach(page => {
-
-        const element =
-            document.getElementById(page);
-
-        if (element) {
-
-            element.classList.add("hidden");
-
-        }
-
-    });
-
-
-    const target =
-        document.getElementById(id);
-
-
-    if (target) {
-
-        target.classList.remove("hidden");
-
-    }
-
-
-    document.querySelectorAll(".nav-btn")
-        .forEach(btn => {
-
-            btn.classList.remove(
-                "bg-[#2b2f4a]",
-                "text-white"
-            );
-
-            btn.classList.add(
-                "text-gray-300"
-            );
-
-        });
-
-
-    const activeButton =
-        button ||
-        document.querySelector(
-            `[data-page="${id}"]`
-        );
-
-
-    if (activeButton) {
-
-        activeButton.classList.remove(
-            "text-gray-300"
-        );
-
-        activeButton.classList.add(
-            "bg-[#2b2f4a]",
-            "text-white"
-        );
-
-    }
-
-
-    const titles = {
-
-        dashboard: "Dashboard",
-        topics: "Topics",
-        profile: "Profile"
-
-    };
-
-
-    document.getElementById("pageTitle")
-        .textContent =
-        titles[id] || "LearnAI";
-
-
-    if (id === "dashboard") {
-
-        updateDashboard();
-
-    }
-
-}
-
-
-function updateStreak() {
-
-    const today =
-        new Date()
-        .toISOString()
-        .split("T")[0];
-
-
-    if (!state.lastStudy) {
-
-        state.streak = 1;
-        state.lastStudy = today;
-
-        saveState();
-
-        return;
-
-    }
-
-
-    if (state.lastStudy === today) {
-
-        return;
-
-    }
-
-
-    const previous =
-        new Date(state.lastStudy);
-
-    const current =
-        new Date(today);
-
-
-    const difference =
-        Math.floor(
-            (current - previous) /
-            (1000 * 60 * 60 * 24)
-        );
-
-
-    if (difference === 1) {
-
-        state.streak++;
-
-    } else if (difference > 1) {
-
-        state.streak = 1;
-
-    }
-
-
-    state.lastStudy = today;
-
-    saveState();
-
-}
-
-
-function startQuiz(level) {
-
-    currentDifficulty = level;
-
-    currentQuiz =
-        [...quizData[level]];
-
-    currentQuestion = 0;
-
-    currentAnswers =
-        new Array(
-            currentQuiz.length
-        ).fill(null);
-
-
-    document.getElementById("quizArea")
-        .scrollIntoView({
-            behavior: "smooth"
-        });
-
-
-    renderQuestion();
-
-}
-
-
-function renderQuestion() {
-
-    const quizArea =
-        document.getElementById("quizArea");
-
-
-    const q =
-        currentQuiz[currentQuestion];
-
-
-    if (!q) {
-
-        return;
-
-    }
-
-
-    const question = q[0];
-
-    const options = q[1];
-
-    const selected =
-        currentAnswers[currentQuestion];
-
-
-    let html = `
-
-        <div class="max-w-3xl mx-auto bg-white p-7 rounded-2xl shadow-sm">
-
-            <div class="text-[#6c63ff] font-bold mb-3">
-                Question ${currentQuestion + 1} / ${currentQuiz.length}
-            </div>
-
-            <h2 class="text-xl md:text-2xl font-bold leading-relaxed mb-6">
-                ${escapeHTML(question)}
-            </h2>
-
-            <div class="space-y-3">
-
-    `;
-
-
-    options.forEach((option, index) => {
-
-        const isSelected =
-            selected === index;
-
-
-        html += `
-
-            <button
-                onclick="selectAnswer(${index})"
-                class="w-full text-left p-4 rounded-xl border-2 transition
-                ${
-                    isSelected
-                    ? "border-[#6c63ff] bg-[#f0eeff]"
-                    : "border-transparent bg-[#f5f6fa] hover:border-[#8e7dff] hover:bg-[#f0eeff]"
-                }">
-
-                <span class="font-medium">
-                    ${String.fromCharCode(65 + index)}.
-                </span>
-
-                ${escapeHTML(option)}
-
-            </button>
-
-        `;
-
-    });
-
-
-    html += `
-
-            </div>
-
-            <div class="flex justify-between mt-7 gap-3">
-
-                <button
-                    onclick="previousQuestion()"
-                    ${currentQuestion === 0 ? "disabled" : ""}
-                    class="px-5 py-3 rounded-xl font-bold bg-gray-200 disabled:opacity-40 disabled:cursor-not-allowed">
-                    ← Previous
+                <button onclick="closeModal()"
+                    class="bg-slate-700 px-5 py-2 rounded-lg">
+                    Cancel
                 </button>
 
-                ${
-                    currentQuestion === currentQuiz.length - 1
-
-                    ?
-
-                    `<button
-                        onclick="finishQuiz()"
-                        class="px-5 py-3 rounded-xl text-white font-bold bg-gradient-to-r from-[#6c63ff] to-[#8e7dff]">
-                        Finish Quiz ✓
-                    </button>`
-
-                    :
-
-                    `<button
-                        onclick="nextQuestion()"
-                        class="px-5 py-3 rounded-xl text-white font-bold bg-gradient-to-r from-[#6c63ff] to-[#8e7dff]">
-                        Next →
-                    </button>`
-                }
+                <button onclick="submitQuizFinal()"
+                    class="bg-purple-600 px-5 py-2 rounded-lg">
+                    Submit
+                </button>
 
             </div>
 
         </div>
+    </div>
 
-    `;
+<script>
 
+const questions = [
+    {
+        topic: "Data Structures",
+        subtopic: "Binary Search Trees",
+        difficulty: "Easy",
+        question: "What is the average search time in a balanced Binary Search Tree?",
+        options: ["O(n)", "O(log n)", "O(n log n)", "O(1)"],
+        answer: 1
+    },
+    {
+        topic: "Data Structures",
+        subtopic: "Hash Tables",
+        difficulty: "Medium",
+        question: "What happens when two keys are mapped to the same slot in a hash table?",
+        options: ["Overflow", "Collision", "Sorting", "Traversal"],
+        answer: 1
+    },
+    {
+        topic: "Web Development",
+        subtopic: "JavaScript Runtime",
+        difficulty: "Medium",
+        question: "Which queue is processed first after the current JavaScript task is completed?",
+        options: ["Callback queue", "Microtask queue", "Event queue", "Stack queue"],
+        answer: 1
+    },
+    {
+        topic: "Database Systems",
+        subtopic: "ACID Properties",
+        difficulty: "Easy",
+        question: "What does A in ACID stand for?",
+        options: ["Availability", "Atomicity", "Accuracy", "Access"],
+        answer: 1
+    }
+];
 
-    quizArea.innerHTML = html;
+let quizQuestions = [];
+let currentQuestion = 0;
+let userAnswers = [];
+let quizResult = null;
 
+function showScreen(screen) {
+
+    document.getElementById("setupScreen").classList.add("hidden");
+    document.getElementById("quizScreen").classList.add("hidden");
+    document.getElementById("analyticsScreen").classList.add("hidden");
+    document.getElementById("dashboardScreen").classList.add("hidden");
+
+    if (screen === "setup") {
+        document.getElementById("setupScreen").classList.remove("hidden");
+    }
+
+    if (screen === "quiz") {
+        document.getElementById("quizScreen").classList.remove("hidden");
+    }
+
+    if (screen === "analytics") {
+        document.getElementById("analyticsScreen").classList.remove("hidden");
+    }
+
+    if (screen === "dashboard") {
+        document.getElementById("dashboardScreen").classList.remove("hidden");
+        updateDashboard();
+    }
 }
 
+function startQuiz() {
 
-function selectAnswer(index) {
+    let topic = document.getElementById("topicSelect").value;
+    let difficulty = document.getElementById("difficultySelect").value;
+    let count = Number(document.getElementById("countSelect").value);
 
-    currentAnswers[currentQuestion] =
-        index;
+    let filtered = questions.filter(function(q) {
 
+        let topicMatch = topic === "All Topics" || q.topic === topic;
+        let difficultyMatch = q.difficulty === difficulty;
+
+        return topicMatch && difficultyMatch;
+    });
+
+    if (filtered.length === 0) {
+        alert("No questions are available for this selection.");
+        return;
+    }
+
+    filtered.sort(function() {
+        return Math.random() - 0.5;
+    });
+
+    quizQuestions = filtered.slice(0, count);
+    userAnswers = new Array(quizQuestions.length).fill(null);
+    currentQuestion = 0;
+
+    showScreen("quiz");
     renderQuestion();
-
+    renderPalette();
 }
 
+function renderQuestion() {
+
+    let q = quizQuestions[currentQuestion];
+
+    document.getElementById("questionNumber").textContent =
+        "Question " + (currentQuestion + 1);
+
+    document.getElementById("progressText").textContent =
+        (currentQuestion + 1) + " / " + quizQuestions.length;
+
+    document.getElementById("topicBadge").textContent = q.topic;
+    document.getElementById("subtopicBadge").textContent = q.subtopic;
+    document.getElementById("difficultyBadge").textContent = q.difficulty;
+
+    document.getElementById("questionText").textContent = q.question;
+
+    let optionsBox = document.getElementById("optionsContainer");
+    optionsBox.innerHTML = "";
+
+    q.options.forEach(function(option, index) {
+
+        let button = document.createElement("button");
+
+        button.className =
+            "option w-full text-left p-4 rounded-lg border border-slate-600 bg-slate-900";
+
+        if (userAnswers[currentQuestion] === index) {
+            button.classList.add("selected");
+        }
+
+        button.textContent =
+            String.fromCharCode(65 + index) + ". " + option;
+
+        button.onclick = function() {
+            userAnswers[currentQuestion] = index;
+            renderQuestion();
+            renderPalette();
+        };
+
+        optionsBox.appendChild(button);
+    });
+
+    let progress =
+        ((currentQuestion + 1) / quizQuestions.length) * 100;
+
+    document.getElementById("progressBar").style.width =
+        progress + "%";
+
+    document.getElementById("previousBtn").disabled =
+        currentQuestion === 0;
+
+    if (currentQuestion === quizQuestions.length - 1) {
+
+        document.getElementById("nextBtn").textContent =
+            "Submit Assessment";
+
+        document.getElementById("nextBtn").onclick =
+            openSubmitModal;
+
+    } else {
+
+        document.getElementById("nextBtn").textContent =
+            "Next";
+
+        document.getElementById("nextBtn").onclick =
+            nextQuestion;
+    }
+
+    updateCounts();
+}
+
+function nextQuestion() {
+
+    if (currentQuestion < quizQuestions.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+        renderPalette();
+    }
+}
 
 function previousQuestion() {
 
     if (currentQuestion > 0) {
-
         currentQuestion--;
-
         renderQuestion();
-
+        renderPalette();
     }
-
 }
 
+function clearSelection() {
 
-function nextQuestion() {
+    userAnswers[currentQuestion] = null;
 
-    if (
-        currentAnswers[currentQuestion] === null
-    ) {
-
-        showToast(
-            "Please select an answer."
-        );
-
-        return;
-
-    }
-
-
-    if (
-        currentQuestion <
-        currentQuiz.length - 1
-    ) {
-
-        currentQuestion++;
-
-        renderQuestion();
-
-    }
-
+    renderQuestion();
+    renderPalette();
 }
 
+function renderPalette() {
 
-function finishQuiz() {
+    let palette = document.getElementById("questionPalette");
+    palette.innerHTML = "";
 
-    if (
-        currentAnswers[currentQuestion] === null
-    ) {
+    quizQuestions.forEach(function(q, index) {
 
-        showToast(
-            "Please select an answer."
-        );
+        let button = document.createElement("button");
 
-        return;
+        button.textContent = index + 1;
 
-    }
+        button.className =
+            "w-10 h-10 rounded-lg bg-slate-700 hover:bg-slate-600";
 
-
-    let score = 0;
-
-
-    currentQuiz.forEach(
-        (question, index) => {
-
-            if (
-                currentAnswers[index] ===
-                question[2]
-            ) {
-
-                score++;
-
-            }
-
+        if (userAnswers[index] !== null) {
+            button.classList.add("bg-purple-600");
         }
-    );
 
+        if (index === currentQuestion) {
+            button.classList.add("ring-2", "ring-purple-400");
+        }
 
-    const percentage =
-        Math.round(
-            (score / currentQuiz.length) * 100
-        );
+        button.onclick = function() {
+            currentQuestion = index;
+            renderQuestion();
+            renderPalette();
+        };
 
-
-    state.quizzes.push({
-
-        difficulty: currentDifficulty,
-        score: score,
-        total: currentQuiz.length,
-        percentage: percentage,
-        date: new Date().toISOString()
-
+        palette.appendChild(button);
     });
 
-
-    updateStreak();
-
-    saveState();
-
-    updateDashboard();
-
-    showQuizResult(
-        score,
-        percentage
-    );
-
+    updateCounts();
 }
 
+function updateCounts() {
 
-function showQuizResult(
-    score,
-    percentage
-) {
+    let answered = userAnswers.filter(function(a) {
+        return a !== null;
+    }).length;
 
-    const quizArea =
-        document.getElementById("quizArea");
+    let remaining = userAnswers.length - answered;
 
+    document.getElementById("answeredCount").textContent = answered;
+    document.getElementById("skippedCount").textContent = remaining;
+    document.getElementById("remainingCount").textContent = remaining;
+}
 
-    let message;
+function openSubmitModal() {
+    document.getElementById("submitModal").classList.remove("hidden");
+}
 
+function closeModal() {
+    document.getElementById("submitModal").classList.add("hidden");
+}
 
-    if (percentage >= 90) {
+function submitQuizFinal() {
 
-        message =
-            "Excellent! You have mastered this level. 🏆";
+    closeModal();
 
-    } else if (percentage >= 70) {
+    let correct = 0;
 
-        message =
-            "Great job! You have successfully passed. 🎉";
+    quizQuestions.forEach(function(q, index) {
 
-    } else if (percentage >= 50) {
+        if (userAnswers[index] === q.answer) {
+            correct++;
+        }
+    });
 
-        message =
-            "Good effort! Keep practicing to improve.";
+    let percentage =
+        Math.round((correct / quizQuestions.length) * 100);
 
-    } else {
+    quizResult = {
+        correct: correct,
+        total: quizQuestions.length,
+        percentage: percentage
+    };
 
-        message =
-            "Don't give up. Practice and try again!";
+    saveResult(percentage);
+    renderAnalytics();
+    showScreen("analytics");
+}
 
+function saveResult(score) {
+
+    let data =
+        JSON.parse(localStorage.getItem("learnai_profile")) || {
+            completed: 0,
+            scores: [],
+            easy: [],
+            medium: [],
+            hard: []
+        };
+
+    data.completed++;
+    data.scores.push(score);
+
+    let difficulty =
+        document.getElementById("difficultySelect").value;
+
+    if (difficulty === "Easy") {
+        data.easy.push(score);
     }
 
+    if (difficulty === "Medium") {
+        data.medium.push(score);
+    }
 
-    quizArea.innerHTML = `
+    if (difficulty === "Hard") {
+        data.hard.push(score);
+    }
 
-        <div class="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-sm text-center">
-
-            <div class="text-6xl mb-4">
-                ${percentage >= 70 ? "🎉" : "📚"}
-            </div>
-
-            <h2 class="text-3xl font-bold mb-5">
-                Quiz Completed!
-            </h2>
-
-            <div class="w-36 h-36 mx-auto mb-6 rounded-full bg-gradient-to-br from-[#6c63ff] to-[#9b8cff] text-white flex flex-col items-center justify-center">
-
-                <strong class="text-4xl">
-                    ${percentage}%
-                </strong>
-
-                <span>
-                    ${score}/${currentQuiz.length}
-                </span>
-
-            </div>
-
-            <h3 class="text-xl font-bold mb-2">
-                ${message}
-            </h3>
-
-            <p class="text-gray-500 mb-5">
-                Difficulty:
-                <strong>
-                    ${currentDifficulty.toUpperCase()}
-                </strong>
-            </p>
-
-            <div class="flex gap-3 justify-center flex-wrap">
-
-                <button
-                    onclick="startQuiz('${currentDifficulty}')"
-                    class="px-5 py-3 rounded-xl text-white font-bold bg-gradient-to-r from-[#6c63ff] to-[#8e7dff]">
-                    Try Again
-                </button>
-
-                <button
-                    onclick="showPage('topics')"
-                    class="px-5 py-3 rounded-xl bg-gray-200 font-bold">
-                    Other Quizzes
-                </button>
-
-            </div>
-
-        </div>
-
-    `;
-
+    localStorage.setItem(
+        "learnai_profile",
+        JSON.stringify(data)
+    );
 }
 
+function average(arr) {
+
+    if (arr.length === 0) {
+        return 0;
+    }
+
+    let total = arr.reduce(function(a, b) {
+        return a + b;
+    }, 0);
+
+    return Math.round(total / arr.length);
+}
+
+function renderAnalytics() {
+
+    let score = quizResult.percentage;
+
+    document.getElementById("finalScore").textContent =
+        score + "%";
+
+    document.getElementById("correctAnswers").textContent =
+        quizResult.correct;
+
+    document.getElementById("totalQuestions").textContent =
+        quizResult.total;
+
+    document.getElementById("scoreProgress").style.width =
+        score + "%";
+
+    document.getElementById("accuracyText").textContent =
+        score + "%";
+
+    let table = document.getElementById("performanceTable");
+    table.innerHTML = "";
+
+    let topicData = {};
+
+    quizQuestions.forEach(function(q, index) {
+
+        if (!topicData[q.topic]) {
+            topicData[q.topic] = {
+                total: 0,
+                correct: 0,
+                difficulties: []
+            };
+        }
+
+        topicData[q.topic].total++;
+        topicData[q.topic].difficulties.push(q.difficulty);
+
+        if (userAnswers[index] === q.answer) {
+            topicData[q.topic].correct++;
+        }
+    });
+
+    Object.keys(topicData).forEach(function(topic) {
+
+        let data = topicData[topic];
+
+        let accuracy =
+            Math.round((data.correct / data.total) * 100);
+
+        let status =
+            accuracy >= 70 ? "Good" : "Needs Practice";
+
+        let row = document.createElement("tr");
+
+        row.className = "border-b border-slate-700";
+
+        row.innerHTML = `
+            <td class="p-3">${topic}</td>
+            <td class="p-3">${data.correct}/${data.total}</td>
+            <td class="p-3">${accuracy}%</td>
+            <td class="p-3">${data.difficulties.join(", ")}</td>
+            <td class="p-3">${status}</td>
+        `;
+
+        table.appendChild(row);
+    });
+}
 
 function updateDashboard() {
 
-    updateStreak();
+    let data =
+        JSON.parse(localStorage.getItem("learnai_profile")) || {
+            completed: 0,
+            scores: [],
+            easy: [],
+            medium: [],
+            hard: []
+        };
 
+    document.getElementById("quizCompleted").textContent =
+        data.completed;
 
-    document.getElementById("dashboardName")
-        .textContent =
-        currentUser.name || "Student";
+    document.getElementById("averageAccuracy").textContent =
+        average(data.scores) + "%";
 
+    document.getElementById("bestPerformance").textContent =
+        data.scores.length
+            ? Math.max(...data.scores) + "%"
+            : "0%";
 
-    document.getElementById("topUserName")
-        .textContent =
-        currentUser.name || "Student";
+    document.getElementById("easyScore").textContent =
+        average(data.easy) + "%";
 
+    document.getElementById("mediumScore").textContent =
+        average(data.medium) + "%";
 
-    const firstLetter =
-        (currentUser.name || "Student")
-        .charAt(0)
-        .toUpperCase();
-
-
-    document.getElementById("avatar")
-        .textContent =
-        firstLetter;
-
-
-    document.getElementById("profileAvatar")
-        .textContent =
-        firstLetter;
-
-
-    document.getElementById("streakValue")
-        .textContent =
-        state.streak;
-
-
-    document.getElementById("quizCount")
-        .textContent =
-        state.quizzes.length;
-
-
-    let average = 0;
-
-
-    if (state.quizzes.length > 0) {
-
-        average =
-            Math.round(
-                state.quizzes.reduce(
-                    (sum, quiz) =>
-                        sum + quiz.percentage,
-                    0
-                ) /
-                state.quizzes.length
-            );
-
-    }
-
-
-    document.getElementById("averageScore")
-        .textContent =
-        average + "%";
-
-
-    updateDifficultyProgress("easy");
-
-    updateDifficultyProgress("medium");
-
-    updateDifficultyProgress("hard");
-
-
-    let recommendation =
-        "Start with an Easy quiz to build your confidence.";
-
-
-    if (average >= 80) {
-
-        recommendation =
-            "Excellent performance! Try a Hard quiz next. 🔥";
-
-    } else if (average >= 60) {
-
-        recommendation =
-            "You're doing well! Try a Medium quiz to improve.";
-
-    }
-
-
-    document.getElementById("recommendation")
-        .textContent =
-        recommendation;
-
+    document.getElementById("hardScore").textContent =
+        average(data.hard) + "%";
 }
 
-
-function updateDifficultyProgress(level) {
-
-    const attempts =
-        state.quizzes.filter(
-            quiz =>
-                quiz.difficulty === level
-        );
-
-
-    const progress =
-        Math.min(
-            attempts.length * 20,
-            100
-        );
-
-
-    document.getElementById(
-        level + "Progress"
-    ).style.width =
-        progress + "%";
-
-
-    document.getElementById(
-        level + "ProgressText"
-    ).textContent =
-        progress + "%";
-
-}
-
-
-function loadProfile() {
-
-    document.getElementById("profileName")
-        .value =
-        currentUser.name || "Student";
-
-
-    document.getElementById("profileEmail")
-        .value =
-        currentUser.email || "";
-
-
-    document.getElementById("profileCollege")
-        .value =
-        currentUser.college || "";
-
-
-    document.getElementById("profileCourse")
-        .value =
-        currentUser.course || "";
-
-
-    document.getElementById("profileYear")
-        .value =
-        currentUser.year || "";
-
-
-    document.getElementById("profileLanguage")
-        .value =
-        currentUser.language || "English";
-
-
-    document.getElementById("profileDisplayName")
-        .textContent =
-        currentUser.name || "Student";
-
-}
-
-
-function saveProfile() {
-
-    const name =
-        document.getElementById("profileName")
-        .value
-        .trim();
-
-
-    currentUser.name =
-        name || "Student";
-
-
-    currentUser.college =
-        document.getElementById("profileCollege")
-        .value
-        .trim();
-
-
-    currentUser.course =
-        document.getElementById("profileCourse")
-        .value
-        .trim();
-
-
-    currentUser.year =
-        document.getElementById("profileYear")
-        .value
-        .trim();
-
-
-    currentUser.language =
-        document.getElementById("profileLanguage")
-        .value;
-
-
-    localStorage.setItem(
-        "learnAIUser",
-        JSON.stringify(currentUser)
-    );
-
-
-    loadProfile();
-
-    updateDashboard();
-
-    showToast(
-        "Profile saved successfully ✓"
-    );
-
-}
-
-
-window.onload = function() {
-
-    loadProfile();
-
-    updateDashboard();
-
-    showPage("dashboard");
-
-};
+showScreen("setup");
 
 </script>
 
 </body>
 </html>
+```
